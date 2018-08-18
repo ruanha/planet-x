@@ -1,0 +1,266 @@
+body {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 16px;
+	font-weight: normal;
+	line-height: normal;
+	letter-spacing: normal;
+}
+
+
+#wrapper{
+	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 1100px;
+}
+
+#slidingWindow{
+	z-index:0;
+	float:left;
+	display: inline-block;
+	width:1004px;
+	height: auto;
+}
+
+#viewPanel{
+	z-index:3;
+	height:20px;
+	margin:5px 15px;
+}
+
+.button{
+	cursor: pointer;
+	display: block;
+	position: relative;
+	text-align: center;
+	border: 1px solid black;
+	width:100px;
+	padding: 5px;
+ 	margin-top: 10px;	
+}
+
+.button:hover{
+	text-decoration: underline;
+}
+
+.button.disabled{
+	color:gray;
+}
+
+.button.disabled:hover{
+	text-decoration: none;
+	cursor:default;
+}
+
+#controlRoomMenu, #explorerMenu, #baseMenu, #planetMenu{
+	margin-left:25px;
+	float:left;	
+}
+
+.viewOptions{
+	float:left;
+	margin-top:5px;
+	margin-left:15px;
+}
+
+#slidingWindowLeft{
+	z-index:1;
+	width:250px;
+	height:570px;
+	float:left;
+}
+
+#slidingWindowRight{
+	position: relative;
+	overflow: hidden;
+	z-index:1;
+	width:750px;
+	height:570px;
+	float:right;
+}
+
+#resourcePanel{
+	position: absolute;
+	left:500px;
+	top:0px;
+	z-index: 100;
+	width:250px;
+	height:570px;
+}
+
+#messages{
+	z-index:3;
+	width:auto;
+	height:auto;
+}
+
+#view{
+	z-index:2;
+	width:3540px;
+	height:540px;
+}
+
+#menu{
+	float:right;
+	position:fixed;
+	bottom:0;
+	width:100%;
+	text-align: right;
+}
+
+.views{
+	overflow: hidden;
+	float:left;
+	z-index:3;
+	width:740px;
+	height:530px;
+	margin:5px;
+}
+
+#controlRoomView{
+	float:left;
+}
+
+#baseView{
+	float:left;
+}
+
+#explorerView{
+	float:left;
+}
+
+#planetView{
+	float:left;
+}
+
+div#resource-monitor:before, div#base-monitor:before, div#event:before,
+div#explorer-monitor:before, div#planet-monitor:before, div#explorer-equip:before {
+	position: absolute;
+	background: white;
+	content: attr(data-legend);
+	left: 8px;
+	top: -13px;
+}
+
+#resource-monitor, #base-monitor {
+	margin-top:15px;
+	position: relative;
+	border: 1px solid black;
+	cursor: default;
+	padding: 5px 10px;
+	width: 200px;
+}
+
+.monitor-header{
+ 	font-weight: bold;
+}
+
+.tooltip .tooltiptext {
+	width: 100px;
+	top: 100%;
+	left: 50%;
+	margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+
+	visibility: hidden;
+
+	background-color: white;
+	border:1px solid black;
+	color: black;
+
+	text-align: center;
+	padding: 5px;
+
+	/* Position the tooltip */
+	position: absolute;
+	z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+	visibility: visible;
+}
+
+.slider:hover{
+	cursor:pointer;
+}
+
+.slider.active{
+	text-decoration: underline;
+}
+
+.planet-map {
+	font-family: "courier new";
+	font-size: 10px;
+	margin:0px;
+	border-width: 0px;
+	padding: 0px;
+	line-height: 5px;
+}
+
+#planet-monitor{
+	overflow-y:hidden;
+	overflow-x: scroll;
+	margin-top: 15px;
+	position: relative;
+	cursor: default;
+}
+
+#world-map{
+	margin-top: 15px;
+	cursor: default;
+	/*width: 720px;*/
+}
+
+#explorer-monitor{
+	margin-top:15px;
+	position: relative;
+	border: 1px solid black;
+	cursor: default;
+}
+
+#explorer-equip{
+	float:left;
+	margin-top:15px;
+	position: relative;
+	border: 1px solid black;
+	cursor: default;
+}
+
+#explorer-panel{
+  display: inline;
+  float:left;
+  width:150px;
+  height:350px; 
+}
+
+.controller{
+  margin:1px;
+  text-align: center;
+  border:1px solid black;
+  width: 15px;
+  overflow: hidden;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+
+.event{
+  padding: 10px;
+  background-color: white;
+  border:2px solid black;
+  position: absolute;
+  left: 520px;
+  top: 375px;
+  width: 350px;
+  z-index:20;
+}
+#event-top-panel{
+  overflow: auto;
+}
+#explorer-health-bar, #explorer-shield{
+  clear: both;
+  float:left;
+}
+
+#enemy-health-bar{
+  float:right;
+}
