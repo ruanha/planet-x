@@ -140,7 +140,9 @@ let buttons = {
 					buttons.reactor();
 					resourcePanel.addResource(["energy"]);
 					resourcePanel.addBaseHeader("Activated")
-					resourcePanel.addBase("reactor");
+					resourcePanel.addBase("cores");
+					base.cores = 1;
+					resourcePanel.updateViewBase("cores");
 				});					
 			}
 		};

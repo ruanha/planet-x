@@ -7,9 +7,23 @@ let base = {
 	droids: {}, //will contain: idle, reactor, extractor
 	pos: {x:67, y:25},
 	cores:1,
-	installed: {
-		//contains cores
-	},
 	underAttack: false,
 	underAttackTimer: undefined,
+
+	output: function(){
+		//BASE EXTRACTOR
+		if ( base.droids.extractor ) {
+			for ( i=0; i<base.droids.extractor; i++ ){
+				//let resourceList = ["metals", "metals", "metals", "metals", "metals", "metals", "metals", "metals", "uran", "rare"];
+				//let randomResource = resourceList[ Math.floor( Math.random()*resourceList.length ) ];
+				resources.metals += 1;
+				resourcePanel.updateViewResource("metals");
+			}
+		}
+
+		if ( base.droids.reactor ){
+			resources.energy += Math.min( base.cores, base.droids.reactor );
+			resourcePanel.updateViewResource("energy");
+		}
+	},
 }

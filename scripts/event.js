@@ -22,7 +22,7 @@ let event = {
 			}			
 		}
 
-		let offloadDroids = utils.newButton("unload droids", "unload-droids", {}, onClick);
+		let offloadDroids = buttons.newButton("unload droids", "unload-droids", {}, onClick);
 
 		this.display([offloadDroids], false, false);
 	},
@@ -141,7 +141,7 @@ let event = {
 			game.resume();
 		}
 
-		return utils.newButton("close", "close-button", {}, onClick);
+		return buttons.newButton("close", "close-button", {}, onClick);
 	},
 
 	enableCloseBtn: function(){
