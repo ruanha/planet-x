@@ -1,9 +1,15 @@
 body {
-	font-family: "Times New Roman", Times, serif;
-	font-size: 16px;
-	font-weight: normal;
-	line-height: normal;
-	letter-spacing: normal;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: normal;
+  letter-spacing: normal;
+}
+
+h1 {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 20px;
+  font-weight: normal;
 }
 
 
@@ -263,4 +269,34 @@ div#explorer-monitor:before, div#planet-monitor:before, div#explorer-equip:befor
 
 #enemy-health-bar{
   float:right;
+}
+
+#fight-table{
+  border-collapse: collapse;
+  width: 100%; 
+}
+
+#battle-player-icon{
+  text-align: left;
+  width: 25%;
+}
+
+#battle-enemy-icon{
+  text-align: right;
+  width: 20%;
+}
+
+
+.ground-cells{
+  text-align: center;
+  width:10%;
+}
+
+div.rowKey {
+  clear: both;
+  float: left;
+}
+
+div.rowVal {
+  float: right;
 }

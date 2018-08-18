@@ -94,7 +94,7 @@ let fight = {
 				chargeShield.setAttribute("class", "button");
 			});
 		}
-		let chargeShield = utils.newButton( "charge shield", "charge-shield", {}, onClickShield );
+		let chargeShield = buttons.newButton( "charge shield", "charge-shield", {}, onClickShield );
 
 
 		onClickFire = ()=>{
@@ -108,7 +108,7 @@ let fight = {
 			}
 			
 		}
-		let fireWeapon = utils.newButton("fire weapon", "fire-weapon", {}, onClickFire);
+		let fireWeapon = buttons.newButton("fire weapon", "fire-weapon", {}, onClickFire);
 
 		onClickPlasma = ()=>{
 			if ( plasmaWeapon.className == "button" ){
@@ -121,7 +121,7 @@ let fight = {
 
 			}			
 		}
-		let plasmaWeapon = utils.newButton("plasma weapon", "plasma-weapon", {}, onClickPlasma);
+		let plasmaWeapon = buttons.newButton("plasma weapon", "plasma-weapon", {}, onClickPlasma);
 
 		if ( explorer.plasma ){
 			return [chargeShield, fireWeapon, plasmaWeapon];
@@ -153,7 +153,7 @@ let fight = {
 				}
 			};
 
-			let button = utils.newButton(key+" ["+fight.enemy.loot[key]+"]", "loot-"+key, {}, onClick);
+			let button = buttons.newButton(key+" ["+fight.enemy.loot[key]+"]", "loot-"+key, {}, onClick);
 			lootBtns.push(button);
 
 		};
