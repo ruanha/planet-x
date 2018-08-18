@@ -108,4 +108,9 @@ let resources = {
 			resourcePanel.updateViewResource(item);
 		}
 	},
+
+	add: function(resource, amount){
+		resources[resource] += amount;
+	},
+
 }

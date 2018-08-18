@@ -6,9 +6,10 @@ let offBase = {
 	U:{pos:{}, name:"uran", droids:0, underAtack:false, underAttackTimer: false},
 
 	
-	updateOutput: function(){
+	output: function(){
 		for ( let i=0; i<offBase.operations.length; i++){
 			resources.add( offBase.operations[i].name, offBase.operations[i].droids )
+			resourcePanel.updateViewResource(offBase.operations[i].name);
 		}
 	},
 

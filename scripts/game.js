@@ -23,7 +23,7 @@ let game = {
 		setInterval( function(){
 			if ( game.on ){
 				base.output();
-				//offbase.output();
+				offBase.output();
 				game.round += 1;
 			}
 		}, 1000);
