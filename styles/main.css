@@ -114,6 +114,10 @@ h1 {
 	text-align: right;
 }
 
+.menu-text{
+	margin-right: 25px;
+}
+
 .views{
 	overflow: hidden;
 	float:left;

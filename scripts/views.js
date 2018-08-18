@@ -15,6 +15,7 @@ let views={
 		let github = document.createElement("a");
 		github.textContent = "github";
 		github.setAttribute("href", "http://github.com");
+		github.setAttribute("class", "menu-text");
 		menu.appendChild(github);
 
 		const slidingWindow = document.createElement("div");
