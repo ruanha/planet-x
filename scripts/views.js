@@ -14,7 +14,7 @@ let views={
 
 		let github = document.createElement("a");
 		github.textContent = "github";
-		github.setAttribute("href", "http://github.com");
+		github.setAttribute("href", "https://github.com/ruanha/planet-x");
 		github.setAttribute("class", "menu-text");
 		menu.appendChild(github);
 
