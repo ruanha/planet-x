@@ -117,7 +117,6 @@ let buttons = {
 			if ( !messages.writesMessage ){
 				landBtn.parentNode.removeChild(landBtn);
 				buttons.restartReactor();
-				buttons.activateExtractor();
 				game.on = true;
 			}
 		}
@@ -143,6 +142,8 @@ let buttons = {
 					resourcePanel.addBase("cores");
 					base.cores = 1;
 					resourcePanel.updateViewBase("cores");
+					document.getElementById("resourcePanel").style.visibility = "visible";
+					buttons.activateExtractor();
 				});					
 			}
 		};

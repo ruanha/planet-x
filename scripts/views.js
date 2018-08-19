@@ -38,6 +38,7 @@ let views={
 
 		const resourcePanel = document.createElement("div");
 		resourcePanel.setAttribute("id", "resourcePanel");
+		resourcePanel.style.visibility = "hidden";
 
 		const resourceMonitor = document.createElement("div");
 		resourceMonitor.setAttribute("id", "resource-monitor");

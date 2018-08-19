@@ -173,7 +173,7 @@ div#explorer-monitor:before, div#planet-monitor:before, div#explorer-equip:befor
 	width: 100px;
 	top: 100%;
 	left: 50%;
-	margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+	margin-left: -56px; /* Use half of the width of button, to center the tooltip */
 
 	visibility: hidden;
 
