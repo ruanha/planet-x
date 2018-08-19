@@ -112,9 +112,13 @@ h1 {
 	bottom:0;
 	width:100%;
 	text-align: right;
+	padding-bottom: 5px;
 }
 
 .menu-text{
+	font-weight: bold;
+	color: gray;
+	text-decoration: none;
 	margin-right: 25px;
 }
 
