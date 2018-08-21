@@ -102,10 +102,8 @@ let map = {
 	reveal: function(long, lat, explorer=false){
 		map.objectMap[lat][long].visible = true;
 		for ( i=0; i<2; i++ ){
-			if ( lat+i+1<map.objectMap[lat].length ){
+			if ( lat+i+1<map.height-1 && lat-i-1>=0 ){
 				map.objectMap[lat+i+1][long].visible = true;
-			}
-			else if ( lat-i-1>0 ){
 				map.objectMap[lat-i-1][long].visible = true;
 			}
 

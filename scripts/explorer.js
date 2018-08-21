@@ -147,7 +147,6 @@ let explorer = {
 		    	Object.assign(explorer.pos, newPos);
 		    	explorer.setDistance();
 		    	explorer.makeMove(newPos);
-		    	explorer.updateView();
 		    }
 		    
 		}
@@ -161,7 +160,7 @@ let explorer = {
     	explorer.currentMove += 1;
     	explorer.onBoard.energy -= 1;
     	Object.assign(explorer.pos, newPos);
-    	//map.reveal(explorer.pos.x, explorer.pos.y, "@");
+    	map.reveal(explorer.pos.x, explorer.pos.y, "@");
     	map.setExplorer(newPos.x, newPos.y);
     	explorer.updateView();
     	planet.display();

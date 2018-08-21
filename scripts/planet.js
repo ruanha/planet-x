@@ -5,7 +5,7 @@ let planet ={
 	which is visible in the planet-monitor.
 	*/
 	center: {x:35, y:35},
-	radius: 33,
+	radius: 37,
 
 	init: function(){
 		this.initSphere();
