@@ -1,20 +1,149 @@
 let map = {
-	init: function(){
-		let planetMonitor = document.getElementById("planet-monitor");
-		let worldMap = document.createElement("div");
-		worldMap.setAttribute("id", "world-map");
-		planetMonitor.appendChild(worldMap);
-		for ( let i=0; i<map.fullMap.length; i++ ){
-			let lat = document.createElement("p");
-			lat.setAttribute("class", "planet-map");
-			lat.setAttribute("id", i);
-			worldMap.appendChild(lat);
-		};
+	objectMap: {},
+	length: undefined,
+	height: undefined,
 
-		map.initVisibleMap();
-		map.updateMap();
-		map.reveal(base.pos.x, base.pos.y);
+	init: function(){
+		this.initObjectMap();
+		this.height = map.objectMap.length;
+		this.length = map.objectMap[0].length;
 	},
+
+	initObjectMap: function(){
+	/* init the map of tile objects.*/
+		let map = []
+		for ( let i=0; i<this.fullMap.length; i++){
+			let lat = []
+			for ( let j=0; j<this.fullMap[i].length; j++ ){
+				let tile = new this.tileFactory({x:i,y:j})
+				lat.push(tile);
+				if ( this.fullMap[i][j] == "H"){
+					//set Hive event
+					tile.symbol = "H"
+					tile.tileEvent = "Hive";
+				}
+				else if ( this.fullMap[i][j] == "*" ){
+					tile.symbol = "*"
+				}
+				else if ( this.fullMap[i][j] == " " ) {
+					tile.symbol = "\u00A0";
+					tile.tileEvent = false;
+				}
+				else if ( this.fullMap[i][j] == "B" ){
+					tile.symbol = 'B';
+					tile.tileEvent = "Base";
+				}
+				else {
+					tile.symbol = "\u00A0";
+				}
+			} 
+			map.push(lat);
+		}
+		this.objectMap = map;
+	},
+
+	tileFactory: function(pos){
+		this.symbol = undefined;
+		this.pos = pos;
+		this.tileEvent = undefined;
+		this.visible = false;
+		this.explorer = false;
+	},
+
+	isVisible: function(x,y){
+		return map.objectMap[y][x].visible;
+	},
+
+	isExplorer: function(x,y){
+		return map.objectMap[y][x].explorer;
+	},
+
+	validY: function(y){
+		if ( y >= this.height || y < 0 ){
+			return false;
+		}
+		else {
+			return y;
+		}
+	},
+
+	validX: function(x){
+		if (  x >= this.length ){
+			return x-this.length;
+		}
+		else if ( x < 0){
+			return x+this.length-1;
+		}
+		else{
+			return x;
+		}
+	},
+
+	mapCoord: function(pos){
+		/* return false if given x,y-coordinate is not on the map.objectMap
+		return (new) coordinate if it exists on map (including if it should wrap
+		to new coordinates)
+		*/
+		x = pos.x;
+		y = pos.y;
+		if ( y > this.height || y < 0 ){
+			return false
+		}
+
+		if (  x > this.length ){
+			return {x:x-this.length, y:y}
+		}
+		else if ( x < 0){
+			return {x:x+this.length, y:y};
+		}
+		return {x,y};
+	},
+
+	reveal: function(long, lat, explorer=false){
+		map.objectMap[lat][long].visible = true;
+		for ( i=0; i<2; i++ ){
+			if ( lat+i+1<map.objectMap[lat].length ){
+				map.objectMap[lat+i+1][long].visible = true;
+			}
+			else if ( lat-i-1>0 ){
+				map.objectMap[lat-i-1][long].visible = true;
+			}
+
+			for ( j=0; j<2; j++){
+				let x = this.validX(long+j)
+				map.objectMap[lat-i][x].visible = true;
+				map.objectMap[lat+i][x].visible = true;
+
+				x = this.validX(long-j)
+				map.objectMap[lat+i][x].visible = true;
+				map.objectMap[lat-i][x].visible = true;
+
+				x = this.validX(long+j+1)
+				map.objectMap[lat][x].visible = true;
+
+				x = this.validX(long-j-1)
+				map.objectMap[lat][x].visible = true;
+			}
+		}
+		if (explorer){
+			this.setExplorer(long, lat);
+		}
+		planet.display();
+	},
+
+	getTile: function(x, y){
+		return map.objectMap[y][x];
+	},
+
+	setExplorer: function(x, y, value=true){
+		map.objectMap[y][x].visible = true;
+		map.objectMap[y][x].explorer = value;
+	},
+
+	/*
+	setTile: function(x, y, value){
+		map.objectMap[y][x] = value;
+	},*/
 
 	fullMap: [
 	[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
@@ -90,57 +219,4 @@ let map = {
 	[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
 	[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']
 	],
-
-	initVisibleMap: function(){
-		map.visibleMap = map.blankMap();
-	},
-
-	blankMap: function(){
-		let blankMap = [];
-
-		for ( i=0; i<map.fullMap.length; i++){
-			blankMap[i] = map.fullMap.slice(0);
-			for ( j=0; j<map.fullMap[i].length; j++ ){
-				blankMap[i][j] = String.fromCharCode(178);
-			}
-		}
-		return blankMap;
-	},
-
-	reveal: function(long, lat, icon=""){
-		for ( i=0; i<2; i++ ){
-			map.visibleMap[lat+i+1][long] = map.fullMap[lat+i+1][long];
-			map.visibleMap[lat-i-1][long] = map.fullMap[lat-i-1][long];
-
-			for ( j=0; j<2; j++){
-				map.visibleMap[lat+i][long-j] = map.fullMap[lat+i][long-j];
-				map.visibleMap[lat-i][long+j] = map.fullMap[lat-i][long+j];
-				map.visibleMap[lat+i][long+j] = map.fullMap[lat+i][long+j];
-				map.visibleMap[lat-i][long-j] = map.fullMap[lat-i][long-j];
-
-				map.visibleMap[lat][long+j+1] = map.fullMap[lat][long+j+1];
-				map.visibleMap[lat][long-j-1] = map.fullMap[lat][long-j-1];
-
-			}
-		}
-		if (icon){
-			map.visibleMap[lat][long] = icon;
-		}
-		map.updateMap();
-	},
-
-	updateMap: function(){
-		for ( let i=0; i<map.visibleMap.length; i++ ){
-			let lat = document.getElementById(""+i);
-			lat.textContent = utils.array2String(map.visibleMap[i]);
-		}
-	},
-
-	getTile: function(x, y){
-		return map.fullMap[y][x];
-	},
-
-	setTile: function(x, y, value){
-		map.fullMap[y][x] = value;
-	}
 }

@@ -1,4 +1,5 @@
 let explorer = {
+	symbol: "@",
 	initialized: false,
 	deployed: false,
 	activated: false,
@@ -84,29 +85,19 @@ let explorer = {
 		    e = e || window.event;
 
 		    if (e.keyCode == '38' || e.keyCode == '87') {
-		    	newPos.y -= 1;
+		    	newPos.y = map.validY(newPos.y-1) || newPos.y;
 		    }
 		    else if (e.keyCode == '40' || e.keyCode == '83') {
-		        newPos.y += 1;
+		        newPos.y = map.validY(newPos.y+1) || newPos.y;
 		    }
 		    else if (e.keyCode == '37' || e.keyCode == '65') {
-		    	newPos.x -= 1
+		    	newPos.x = map.validX(newPos.x-1);
 		    }
 		    else if (e.keyCode == '39' || e.keyCode == '68') {
-		    	newPos.x += 1
+		    	newPos.x = map.validX(newPos.x+1);
 		    }
 
-		    // SCROLL MAP
-		    if ( (explorer.pos.x - newPos.x) == -1 && newPos.x > 100 && newPos.x < 140 ){
-		    	document.getElementById("planet-monitor").scrollTo(
-		    		document.getElementById("planet-monitor").scrollLeft+10, 0);
-		    }
-		    else if ( (explorer.pos.x - newPos.x) == 1 && newPos.x < 100 ){
-		    	document.getElementById("planet-monitor").scrollTo(
-		    		document.getElementById("planet-monitor").scrollLeft-10, 0);
-			}
-
-		    console.log(newPos.x, newPos.y);
+		    console.log(newPos.x, newPos.y)
 
 		    tile = map.getTile(newPos.x, newPos.y);
 		    // TILE == BASE
@@ -123,11 +114,11 @@ let explorer = {
 		    	}
 		    }
 		    // TILE == RESOURCE
-		    else if ( tile == "R" || tile == "M" || tile == "U" ){
+		    else if ( tile.symbol == "R" || tile.symbol == "M" || tile.symbol == "U" ){
 		    	if ( !offBase.baseExist(newPos.x, newPos.y ) ){
 		    		explorer.makeMove(newPos);
-		    		offBase.addOffbase(tile, newPos.x, newPos.y );
-		    		event.resource(tile, newPos.x, newPos.y);    		
+		    		offBase.addOffbase(tile.symbol, newPos.x, newPos.y );
+		    		event.resource(tile.symbol, newPos.x, newPos.y);    		
 		    	}
 		    	else if ( offBase.underAttack( newPos.x, newPos.y ) ){
 		    		explorer.makeMove(newPos);
@@ -135,32 +126,33 @@ let explorer = {
 		    	}
 		    	else{
 		    		explorer.makeMove(newPos);
-		    		event.resource(tile, newPos.x, newPos.y);
+		    		event.resource(tile.symbol, newPos.x, newPos.y);
 		    	}
 
 		    }
 		    // TILE == HIVE
-		    else if ( tile == 'H' ){
+		    else if ( tile.symbol == 'H' ){
 		    	explorer.makeMove(newPos);
 		    	fight.manager("hiveAttackBeast");
 		    }
 		    // TILE == DESTROYED HIVE
-		    else if ( tile == 'X'){
+		    else if ( tile.symbol == 'X'){
 		    	explorer.makeMove(newPos);
 		    	console.log("The ruins of a destroyed hive");
 		    }
 		    else{
 		    	explorer.currentMove += 1;
 		    	explorer.onBoard.energy -= 1;
+		    	map.objectMap[explorer.pos.y][explorer.pos.x].explorer = false;
 		    	Object.assign(explorer.pos, newPos);
 		    	explorer.setDistance();
-		    	map.reveal(explorer.pos.x, explorer.pos.y, "@");
+		    	explorer.makeMove(newPos);
 		    	explorer.updateView();
 		    }
 		    
 		}
 		else if ( explorer.deployed ) {
-			map.reveal(explorer.pos.x, explorer.pos.y);
+			//map.reveal(explorer.pos.x, explorer.pos.y);
 			explorer.dead("ran out of energy");
 		}
 	},
@@ -169,8 +161,10 @@ let explorer = {
     	explorer.currentMove += 1;
     	explorer.onBoard.energy -= 1;
     	Object.assign(explorer.pos, newPos);
-    	map.reveal(explorer.pos.x, explorer.pos.y, "@");
+    	//map.reveal(explorer.pos.x, explorer.pos.y, "@");
+    	map.setExplorer(newPos.x, newPos.y);
     	explorer.updateView();
+    	planet.display();
 	},
 
 	dead: function(message){

@@ -201,15 +201,6 @@ div#explorer-monitor:before, div#planet-monitor:before, div#explorer-equip:befor
 	text-decoration: underline;
 }
 
-.planet-map {
-	font-family: "courier new";
-	font-size: 10px;
-	margin:0px;
-	border-width: 0px;
-	padding: 0px;
-	line-height: 5px;
-}
-
 #planet-monitor{
 	overflow-y:hidden;
 	overflow-x: scroll;
@@ -222,6 +213,15 @@ div#explorer-monitor:before, div#planet-monitor:before, div#explorer-equip:befor
 	margin-top: 15px;
 	cursor: default;
 	/*width: 720px;*/
+}
+
+#sphere p {
+	font-family: "courier new";
+	font-size: 10px;
+	margin:0px;
+	border-width: 0px;
+	padding: 0px;
+	line-height: 5px;
 }
 
 #explorer-monitor{
@@ -255,7 +255,6 @@ div#explorer-monitor:before, div#planet-monitor:before, div#explorer-equip:befor
   display: inline-block;
   white-space: nowrap;
 }
-
 
 .event{
   padding: 10px;
@@ -293,7 +292,6 @@ div#explorer-monitor:before, div#planet-monitor:before, div#explorer-equip:befor
   text-align: right;
   width: 20%;
 }
-
 
 .ground-cells{
   text-align: center;

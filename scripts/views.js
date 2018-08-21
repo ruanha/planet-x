@@ -104,5 +104,6 @@ let views={
 		planetView.appendChild(planetMonitor);
 
 		map.init();
+		planet.init();
 	},
 };

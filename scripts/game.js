@@ -48,7 +48,7 @@ if ( game.development ){
 				base.droids.idle = 10;
 				resourcePanel.updateViewBase("idle")
 				document.getElementById("explorer-button").click()
-				explorer.onBoard.energy = 100;
+				explorer.onBoard.energy = 1000;
 				explorer.onBoard.droids = 1;
 				document.getElementById("deploy-button").click()
 			}, 100)
