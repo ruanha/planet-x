@@ -27,39 +27,6 @@ let explorer = {
 		explorerView.appendChild(explorerPanel);
 	},
 
-	explorerBtn: function(){
-		cost = { metals:5, energy:5 }
-		onClick = ()=>{
-			if ( utils.canBuy(cost) ){
-				if ( explorerBtn.className == "tooltip button" ){
-					explorerBtn.setAttribute("class", "tooltip button disabled");
-					explorer.deployBtn();
-					explorer.initMonitor();
-				}
-			}
-		}
-		explorerBtn = utils.newButton("explorer", "explorer-button", cost, onClick);
-		const explorerPanel = document.getElementById("explorer-panel");
-		explorerPanel.appendChild(explorerBtn);
-	},
-
-	deployBtn: function(){
-		onClick = ()=>{
-			if ( !explorer.actvated ) {
-				//if first time to deploy
-				explorer.actvated = true
-				document.getElementById("planetMenu").click();
-			}
-			explorer.deployed = true;
-			Object.assign(explorer.pos, base.pos);
-			explorer.exploring();			
-		}
-
-		const explorerPanel = document.getElementById("explorer-panel");
-		let deployBtn = utils.newButton("deploy!", "deploy-button", {}, onClick)
-		explorerPanel.appendChild(deployBtn);
-	},
-
 	initPanel: function(){
 		explorer.onBoard.energy = 0;
 		explorer.onBoard.droids = 0;
@@ -74,53 +41,8 @@ let explorer = {
 		explorerMonitor.appendChild(explorerMonitorTable);
 		explorerPanel.appendChild(explorerMonitor);
 
-		explorer.addEnergy();
-		explorer.addDroids();
-	},
-
-	addEnergy: function(){
-		let explorerMonitorTable = document.getElementById("explorer-monitor-table");
-
-		let newRow = document.createElement("tr");
-		let item = document.createElement("td");
-		let itemQuantity = document.createElement("td");
-		itemQuantity.setAttribute("id", "explorer-energy-quant");
-
-		item.textContent = "energy";
-		itemQuantity.textContent = 0;
-
-		newRow.appendChild(item);
-		newRow.appendChild(itemQuantity);
-
-		let subtract = document.createElement("td");
-		subtract.setAttribute("class", "controller");
-		subtract.setAttribute("id", "explorer-energy-subtract");	
-		subtract.textContent = "-";
-		subtract.addEventListener('click', ()=>{
-			if ( explorer.onBoard.energy && explorer.onBase()){
-				explorer.onBoard.energy -=1;
-				resources.add("energy", 1);
-				explorer.updateView();
-			}
-		});
-				
-		let add = document.createElement("td");
-		add.setAttribute("class", "controller");
-		add.setAttribute("id", "explorer-energy-add");
-		add.textContent = "+";
-		add.addEventListener('click', ()=>{
-			if ( resources.energy > 0 && explorer.onBase() ){
-				explorer.charge();
-				resources.subtract({energy:1});
-				explorer.updateView();
-			}
-		});
-
-		newRow.appendChild(subtract);
-		newRow.appendChild(add);
-
-		explorerMonitorTable.appendChild(newRow);
-
+		buttons.addEnergy();
+		buttons.addDroids();
 	},
 
 	charge: function(){
@@ -138,52 +60,6 @@ let explorer = {
 			explorer.onBoard.energy -= 1;
 			explorer.shield = ( (explorer.maxShield-explorer.shield) < 10 )? explorer.maxShield:explorer.shield+10;
 		}
-	},
-
-	addDroids: function(type, includeController=false){
-		let explorerMonitorTable = document.getElementById("explorer-monitor-table");
-
-		let newRow = document.createElement("tr");
-		let item = document.createElement("td");
-		let itemQuantity = document.createElement("td");
-		itemQuantity.setAttribute("id", "explorer-droids-quant");
-
-		item.textContent = "droids";
-		itemQuantity.textContent = 0;
-
-		newRow.appendChild(item);
-		newRow.appendChild(itemQuantity);
-
-		let subtract = document.createElement("td");
-		subtract.setAttribute("class", "controller");
-		subtract.setAttribute("id", "explorer-droids-subtract");	
-		subtract.textContent = "-";
-		subtract.addEventListener('click', ()=>{
-			if ( explorer.onBoard.droids && explorer.onBase()){
-				explorer.onBoard.droids -=1;
-				base.droids.idle += 1;
-				resourcePanel.updateViewBase("idle");
-				explorer.updateView();
-			}
-		});
-				
-		let add = document.createElement("td");
-		add.setAttribute("class", "controller");
-		add.setAttribute("id", "explorer-droids-add");
-		add.textContent = "+";
-		add.addEventListener('click', ()=>{
-			if ( base.droids.idle && explorer.onBase()){
-				explorer.onBoard.droids +=1;
-				base.droids.idle -= 1;
-				resourcePanel.updateViewBase("idle");
-				explorer.updateView();
-			}
-		});
-
-		newRow.appendChild(subtract);
-		newRow.appendChild(add);
-
-		explorerMonitorTable.appendChild(newRow);
 	},
 
 	exploring: function(){
@@ -327,75 +203,6 @@ let explorer = {
 		}
 	},
 
-	upgBatteryBtn: function(){
-		cost = {metals:20, rare:10}
-		onClick = ()=>{
-			if ( upgBatteryBtn.className == "tooltip button" ){
-				if ( explorer.battery == 15 ){
-					upgBatteryBtn.setAttribute("class", "tooltip button disabled");
-					utils.cooldown(explorer.upgradeCooldowns["batteryI"], upgBatteryBtn, "upgrade battery II", function(){
-						explorer.battery += 15;
-						upgBatteryBtn.setAttribute("class", "tooltip button");
-					});
-				}
-				else if ( explorer.battery == 30  ){
-					upgBatteryBtn.setAttribute("class", "tooltip button disabled");
-					utils.cooldown(explorer.upgradeCooldowns["batteryI"], upgBatteryBtn, "upgrade battery II", function(){
-						explorer.battery += 15;
-					});
-				}
-
-			}
-		}
-
-		let upgBatteryBtn = utils.newButton("upgrade battery", "upgrade-battery-button", cost, onClick);
-		const explorerPanel = document.getElementById("explorer-panel");
-		explorerPanel.appendChild(upgBatteryBtn);
-	},
-
-	upgPlasmaBtn: function(){
-		cost = {metals:20, rare:10}
-		onClick = ()=>{
-			if ( upgPlasmaBtn.className == "tooltip button" ){
-				explorer.plasma = 5;
-				upgPlasmaBtn.setAttribute("class", "tooltip button disabled");
-			}
-		}
-		let upgPlasmaBtn = utils.newButton("upgrade plasma weapon", "upgrade-plasma-button", cost, onClick);
-		const explorerPanel = document.getElementById("explorer-panel");
-		explorerPanel.appendChild(upgPlasmaBtn);
-	},
-
-	upgShieldBtn: function(){
-		cost = {metals:20, rare:10}
-		onClick = ()=>{
-			if ( upgShieldBtn.className == "tooltip button" ){
-				upgShieldBtn.setAttribute("class", "tooltip button disabled");
-				if ( explorer.maxShield == 0 ){
-					utils.cooldown(explorer.upgradeCooldowns["shieldI"], upgShieldBtn, "upgrade shield II", function(){
-						explorer.maxShield += 5;
-						upgShieldBtn.setAttribute("class", "tooltip button");
-					});					
-				}
-				else if ( explorer.maxShield == 5 ){
-					utils.cooldown(explorer.upgradeCooldowns["shieldII"], upgShieldBtn, "upgrade shield III", function(){
-						explorer.maxShield += 5;
-						upgShieldBtn.setAttribute("class", "tooltip button");
-					});						
-				}
-				else if ( explorer.maxShield == 10 ){
-					utils.cooldown(explorer.upgradeCooldowns["shieldIII"], upgShieldBtn, "upgrade shield III", function(){
-						explorer.maxShield += 5;
-					});						
-				}
-			}
-		}
-
-		let upgShieldBtn = utils.newButton("upgrade shield", "upgrade-shield-button", cost, onClick);
-		const explorerPanel = document.getElementById("explorer-panel");
-		explorerPanel.appendChild(upgShieldBtn);
-	},
-
 	displayShield: function(){
 		if ( explorer.shield > 0 && explorer.shield <= 5 ){
 			return " |";
@@ -409,15 +216,5 @@ let explorer = {
 		else{
 			return "";
 		}
-	},
-
-	amphibiousBtn: function(){
-		cost = {};
-		onClick = ()=>{
-			utils.cooldown()
-			explorer.amphibious = true;
-		}
-		let amphibiousBtn = utils.newButton("", "", {}, onClick) 
-
 	},
 }
