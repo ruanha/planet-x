@@ -25,7 +25,7 @@ let planet ={
 		document.getElementById("planet-monitor").appendChild(sphere);
 	},
 
-	display: function(){
+	display: function(dx=0){
 		let sphere = document.getElementById("sphere")
 		let lats = sphere.getElementsByTagName("p");
 
@@ -35,7 +35,7 @@ let planet ={
 
 				if ( (i-this.center.x)**2 + (j-this.center.y)**2 <= this.radius**2 ){
 
-					let x = explorer.pos.x-this.center.x+j;
+					let x = explorer.pos.x+dx-this.center.x+j;
 					let y = i;
 
 					x = map.validX(x);
@@ -52,4 +52,8 @@ let planet ={
 			lats[i].innerHTML = rowHTML+"</span>";
 		}
 	},
+
+	rotate: function(dx){
+		this.display(dx);
+	}
 }

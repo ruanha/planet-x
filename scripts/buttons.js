@@ -305,8 +305,8 @@ let buttons = {
 	},
 
 	upgBatteryBtn: function(){
-		cost = {metals:20, rare:10}
-		onClick = ()=>{
+		let cost = {metals:20, rare:10}
+		let onClick = ()=>{
 			if ( upgBatteryBtn.className == "tooltip button" ){
 				if ( explorer.battery == 15 ){
 					upgBatteryBtn.setAttribute("class", "tooltip button disabled");
@@ -325,14 +325,14 @@ let buttons = {
 			}
 		}
 
-		let upgBatteryBtn = utils.newButton("upgrade battery", "upgrade-battery-button", cost, onClick);
+		let upgBatteryBtn = buttons.newButton("upgrade battery", "upgrade-battery-button", cost, onClick);
 		const explorerPanel = document.getElementById("explorer-panel");
 		explorerPanel.appendChild(upgBatteryBtn);
 	},
 
 	upgPlasmaBtn: function(){
-		cost = {metals:20, rare:10}
-		onClick = ()=>{
+		let cost = {metals:20, rare:10}
+		let onClick = ()=>{
 			if ( upgPlasmaBtn.className == "tooltip button" ){
 				explorer.plasma = 5;
 				upgPlasmaBtn.setAttribute("class", "tooltip button disabled");
@@ -344,8 +344,8 @@ let buttons = {
 	},
 
 	upgShieldBtn: function(){
-		cost = {metals:20, rare:10}
-		onClick = ()=>{
+		let cost = {metals:20, rare:10}
+		let onClick = ()=>{
 			if ( upgShieldBtn.className == "tooltip button" ){
 				upgShieldBtn.setAttribute("class", "tooltip button disabled");
 				if ( explorer.maxShield == 0 ){
@@ -418,7 +418,7 @@ let buttons = {
 
 		explorerMonitorTable.appendChild(newRow);
 	},
-	
+
 	addEnergy: function(){
 		let explorerMonitorTable = document.getElementById("explorer-monitor-table");
 
@@ -461,6 +461,85 @@ let buttons = {
 		newRow.appendChild(add);
 
 		explorerMonitorTable.appendChild(newRow);
+	},
 
+	// FIGHT BUTTONS
+	battleButtons: function(){
+		let onClickShield = ()=>{
+			if ( explorer.onBoard.energy > 0 && chargeShield.className == "button" ){
+				chargeShield.setAttribute("class", "button disabled");
+				explorer.chargeShield();
+				document.getElementById("explorer-shield").textContent = "shield "+explorer.shield+"/"+explorer.maxShield;
+				document.getElementById("battle-player-icon").textContent = "@explorer"+explorer.displayShield();
+				explorer.updateView();
+			}
+			utils.cooldown(5000, chargeShield, "charge shield", function(){
+				chargeShield.setAttribute("class", "button");
+			});
+		}
+		let chargeShield = buttons.newButton( "charge shield", "charge-shield", {}, onClickShield );
+
+
+		let onClickFire = ()=>{
+			if ( fireWeapon.className == "button" ){
+				fireWeapon.setAttribute("class", "button disabled");
+				utils.cooldown(2000, fireWeapon, "fire weapon", function(){
+					fireWeapon.setAttribute("class", "button");
+				});
+				event.animation(explorer.weaponIcon, fight.player.icon, explorer.weapon);
+				setTimeout(fight.playerAttack.bind(fight), explorer.weaponSpeed*NUMBER_OF_CELLS, explorer.weapon);
+			}
+			
+		}
+		let fireWeapon = buttons.newButton("fire weapon", "fire-weapon", {}, onClickFire);
+
+		let onClickPlasma = ()=>{
+			if ( plasmaWeapon.className == "button" ){
+				plasmaWeapon.setAttribute("class", "button disabled");
+				utils.cooldown(2000, plasmaWeapon, "plasma weapon", function(){
+					plasmaWeapon.setAttribute("class", "button");
+				});
+				event.animation(explorer.plasmaIcon, fight.player.icon, explorer.plasma);
+				setTimeout(fight.playerAttack.bind(fight), explorer.plasmaSpeed*NUMBER_OF_CELLS, explorer.plasma);
+
+			}			
+		}
+		let plasmaWeapon = buttons.newButton("plasma weapon", "plasma-weapon", {}, onClickPlasma);
+
+		if ( explorer.plasma ){
+			return [chargeShield, fireWeapon, plasmaWeapon];
+		}
+		else{
+			return [chargeShield, fireWeapon];
+		}
+		
+	},
+
+	lootBtns: function(){
+		// for each loot item make a new button and add to the list of buttons passed.
+		let lootBtns = [];
+		for ( let key in fight.enemy.loot ){
+			let onClick = ()=>{
+				key = button.textContent.split(" ")[0];
+				if ( key == "energy" ){
+					if ( fight.enemy.loot[key] > 0 && explorer.charge() ){
+						button.textContent = key+" ["+(fight.enemy.loot[key]-=1)+"]";
+						explorer.updateView();
+					}
+				}
+				else {
+					if ( fight.enemy.loot[key] > 0  ){
+						explorer.onBoard[key] += 1;
+						button.textContent = key+" ["+(fight.enemy.loot[key]-=1)+"]";
+						explorer.updateView();
+					}
+				}
+			};
+
+			let button = buttons.newButton(key+" ["+fight.enemy.loot[key]+"]", "loot-"+key, {}, onClick);
+			lootBtns.push(button);
+
+		};
+		return lootBtns;
 	},
 }

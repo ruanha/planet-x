@@ -1,4 +1,5 @@
 let explorer = {
+	techLevel: 0,
 	symbol: "@",
 	initialized: false,
 	deployed: false,
@@ -6,7 +7,7 @@ let explorer = {
 	pos: {x:67, y:25},
 	onBoard: {energy:0, droids:0},
 	currentMove: 0,
-	battery:100,
+	battery:15,
 	shield:0,
 	maxShield:0,
 	health:10,
@@ -44,6 +45,14 @@ let explorer = {
 
 		buttons.addEnergy();
 		buttons.addDroids();
+	},
+
+	upgrade: function(){
+		switch (explorer.techLevel){
+			case 1:
+			buttons.upgBatteryBtn();
+			break;
+		}
 	},
 
 	charge: function(){
@@ -103,6 +112,7 @@ let explorer = {
 		    	map.setExplorer(explorer.pos.x, explorer.pos.y, false);
 		    	Object.assign(explorer.pos, base.pos);
 		    	if ( !base.underAttack ){
+		    		explorer.distanceFromBase = 0;
 			    	explorer.deployed = false;
 			    	map.reveal(explorer.pos.x, explorer.pos.y, "");
 			    	explorer.health = explorer.maxHealth;
@@ -142,6 +152,16 @@ let explorer = {
 		    else if ( tile.symbol == 'X'){
 		    	explorer.makeMove(newPos);
 		    	console.log("The ruins of a destroyed hive");
+		    }
+		    // RANDOM ENEMY
+		    else if ( explorer.distanceFromBase > 2 && Math.random() > 0.9999 ) {
+		    	fight.manager("submarineBeast");
+		    }
+		    // TECH RETRIEVED
+		    else if ( tile.symbol == 'T' ){
+		    	explorer.techLevel += 1;
+		    	tile.symbol = ' ';
+		    	explorer.upgrade();
 		    }
 		    else{
 		    	explorer.currentMove += 1;

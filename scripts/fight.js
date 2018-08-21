@@ -28,7 +28,7 @@ let fight = {
 		this.initPlayer();
 
 		game.pause();
-		event.display(buttons.battleButtons(), true, true);
+		event.display( buttons.battleButtons(), true, true );
 		fight.enemy.interval = setInterval(fight.enemyAttack.bind(fight), fight.enemy.delay);
 	},
 
@@ -36,7 +36,7 @@ let fight = {
 		clearInterval(fight.enemy.interval);
 		fight.enemy.defeated();
 		event.closePanel();
-		event.display(buttons.lootBtns(), false, false);
+		event.display( buttons.lootBtns(), false, false );
 	},
 
 	playerDead: function(){
