@@ -11,7 +11,7 @@ let event = {
 		event.titleText = "A Source off "+titleText[tileIcon]+"!";
 		event.message = message;
 		game.pause();
-
+		
 		onClick = ()=>{
 			if ( explorer.onBoard.droids > 0){
 				explorer.onBoard.droids -= 1;

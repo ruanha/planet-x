@@ -7,10 +7,12 @@ let game = {
 
 	pause: function(){
 		game.on = false;
+		explorer.deployed = false;
 	},
 
 	resume: function(){
 		game.on = true;
+		explorer.deployed = ( explorer.pos == base.pos )? false:true;
 	},
 
 	init: function(){

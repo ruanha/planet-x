@@ -97,17 +97,18 @@ let explorer = {
 		    	newPos.x = map.validX(newPos.x+1);
 		    }
 
-		    console.log(newPos.x, newPos.y)
-
 		    tile = map.getTile(newPos.x, newPos.y);
 		    // TILE == BASE
 		    if ( newPos.x == base.pos.x && newPos.y == base.pos.y ){
+		    	map.setExplorer(explorer.pos.x, explorer.pos.y, false);
 		    	Object.assign(explorer.pos, base.pos);
 		    	if ( !base.underAttack ){
 			    	explorer.deployed = false;
 			    	map.reveal(explorer.pos.x, explorer.pos.y, "");
 			    	explorer.health = explorer.maxHealth;
 			    	explorer.shield = explorer.maxShield;
+
+			    	document.getElementById("explorerMenu").click()
 		    	}
 		    	else{
 		    		fight.manager("baseAttackBeast");
@@ -116,6 +117,7 @@ let explorer = {
 		    // TILE == RESOURCE
 		    else if ( tile.symbol == "R" || tile.symbol == "M" || tile.symbol == "U" ){
 		    	if ( !offBase.baseExist(newPos.x, newPos.y ) ){
+		    		map.setExplorer(explorer.pos.x, explorer.pos.y, false);
 		    		explorer.makeMove(newPos);
 		    		offBase.addOffbase(tile.symbol, newPos.x, newPos.y );
 		    		event.resource(tile.symbol, newPos.x, newPos.y);    		
@@ -125,6 +127,7 @@ let explorer = {
 		    		fight.manager("mineAttackBeast");
 		    	}
 		    	else{
+		    		map.setExplorer(explorer.pos.x, explorer.pos.y, false);
 		    		explorer.makeMove(newPos);
 		    		event.resource(tile.symbol, newPos.x, newPos.y);
 		    	}
@@ -151,8 +154,9 @@ let explorer = {
 		    
 		}
 		else if ( explorer.deployed ) {
-			//map.reveal(explorer.pos.x, explorer.pos.y);
+			map.reveal(explorer.pos.x, explorer.pos.y, "");
 			explorer.dead("ran out of energy");
+			map.setExplorer(base.pos.x, base.pos.y);
 		}
 	},
 
