@@ -52,6 +52,9 @@ if ( game.development ){
 				document.getElementById("explorer-button").click()
 				explorer.onBoard.energy = 1000;
 				explorer.onBoard.droids = 1;
+				explorer.maxHealth = 100;
+				explorer.health = 100;
+				explorer.weapon = 10;
 				document.getElementById("deploy-button").click()
 			}, 100)
 		}, 100)

@@ -94,9 +94,10 @@ let views={
 		view.appendChild(planetView);
 
 		let explorerMonitor = document.createElement("div");
-		explorerMonitor.setAttribute("id", "explorer-monitor");
+		explorerMonitor.setAttribute("id", "planet-monitor-explorer");
 		explorerMonitor.setAttribute("data-legend", "explorer");
 		planetView.appendChild(explorerMonitor);
+		explorer.updateMonitor();
 
 		let planetMonitor = document.createElement("div");
 		planetMonitor.setAttribute("id", "planet-monitor");

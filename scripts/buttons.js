@@ -100,6 +100,7 @@ let buttons = {
 			planetMenu.addEventListener('click', ()=>{
 				let resourcePanel = document.getElementById("resourcePanel");
 				resourcePanel.style.visibility='hidden';
+				explorer.updateMonitor();
 			})
 
 		},

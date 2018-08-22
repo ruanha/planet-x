@@ -11,8 +11,10 @@ let explorer = {
 	shield:0,
 	maxShield:0,
 	health:10,
-	maxHealth:100,
-	weapon:100,
+	maxHealth:10,
+	maxCargo: 10,
+	cargo: 0,
+	weapon:1,
 	weaponSpeed:200, //speed of the weapons bullet
 	weaponIcon:"·",
 	plasma:false,
@@ -34,6 +36,7 @@ let explorer = {
 		explorer.onBoard.droids = 0;
 		const explorerPanel = document.getElementById("explorer-panel");
 		const explorerMonitor = document.createElement("div");
+
 		explorerMonitor.setAttribute("id", "explorer-monitor");
 		explorerMonitor.setAttribute("data-legend", "explorer");
 
@@ -47,12 +50,38 @@ let explorer = {
 		buttons.addDroids();
 	},
 
+	updateMonitor: function(){
+		const explorerMonitor = document.getElementById("planet-monitor-explorer");
+		while (explorerMonitor.firstChild){
+			explorerMonitor.removeChild(explorerMonitor.firstChild)
+		}
+		for ( key in explorer.onBoard ){
+			let div = document.createElement("div");
+			div.setAttribute("id", "onboard-"+key);
+			div.setAttribute("class", "onboard");
+			div.textContent = key+":"+explorer.onBoard[key];
+			explorerMonitor.appendChild(div)
+		}
+		hitPointCounter = document.createElement("div");
+		hitPointCounter.setAttribute("id", "hit-point-counter");
+		hitPointCounter.textContent = "hp: "+explorer.health+"/"+explorer.maxHealth;
+
+		cargoSpace = document.createElement("div");
+		cargoSpace.setAttribute("id", "cargo-space");
+		cargoSpace.textContent = "cargo: "+explorer.cargo+"/"+explorer.maxCargo;
+
+		explorerMonitor.appendChild(hitPointCounter)
+		explorerMonitor.appendChild(cargoSpace)
+
+	},
+
 	upgrade: function(){
 		switch (explorer.techLevel){
 			case 1:
 			buttons.upgBatteryBtn();
 			break;
 		}
+		explorer.updateMonitor();
 	},
 
 	charge: function(){
@@ -63,6 +92,7 @@ let explorer = {
 		else {
 			return false;
 		}
+		explorer.updateMonitor();
 	},
 
 	chargeShield: function(){
@@ -70,6 +100,7 @@ let explorer = {
 			explorer.onBoard.energy -= 1;
 			explorer.shield = ( (explorer.maxShield-explorer.shield) < 10 )? explorer.maxShield:explorer.shield+10;
 		}
+		explorer.updateMonitor();
 	},
 
 	exploring: function(){
@@ -188,6 +219,7 @@ let explorer = {
 			explorer.dead("ran out of energy");
 			map.setExplorer(base.pos.x, base.pos.y);
 		}
+		explorer.updateMonitor();
 	},
 
 	makeMove: function(newPos){
