@@ -214,7 +214,6 @@ let explorer = {
 		    // TILE == RESOURCE
 		    else if ( tile.symbol == "R" || tile.symbol == "M" || tile.symbol == "U" ){
 		    	if ( !offBase.baseExist(newPos.x, newPos.y ) ){
-		    		map.setExplorer(explorer.pos.x, explorer.pos.y, false);
 		    		explorer.makeMove(newPos);
 		    		offBase.addOffbase(tile.symbol, newPos.x, newPos.y );
 		    		event.resource(tile.symbol, newPos.x, newPos.y);    		
@@ -224,7 +223,6 @@ let explorer = {
 		    		fight.manager("mineAttackBeast");
 		    	}
 		    	else{
-		    		map.setExplorer(explorer.pos.x, explorer.pos.y, false);
 		    		explorer.makeMove(newPos);
 		    		event.resource(tile.symbol, newPos.x, newPos.y);
 		    	}
@@ -256,17 +254,15 @@ let explorer = {
 		    }
 		    // TECH RETRIEVED
 		    else if ( tile.symbol == 'T' ){
+		    	explorer.makeMove(newPos);
 		    	explorer.techLevel += 1;
-		    	tile.symbol = ' ';
+		    	tile.symbol = '\u00A0';
 		    	explorer.upgrade();
 		    }
 		    else if ( tile.symbol == '*' ){
 		    	if ( explorer.amphibious ){
 			    	explorer.currentMove += 1;
 			    	explorer.onBoard.energy -= 1;
-			    	map.objectMap[explorer.pos.y][explorer.pos.x].explorer = false;
-			    	Object.assign(explorer.pos, newPos);
-			    	explorer.setDistance();
 			    	explorer.makeMove(newPos);
 		    	}
 		    	else {
@@ -276,9 +272,6 @@ let explorer = {
 		    else if ( tile.symbol == '\u00A0' ){
 		    	explorer.currentMove += 1;
 		    	explorer.onBoard.energy -= 1;
-		    	map.objectMap[explorer.pos.y][explorer.pos.x].explorer = false;
-		    	Object.assign(explorer.pos, newPos);
-		    	explorer.setDistance();
 		    	explorer.makeMove(newPos);
 		    }
 		    
@@ -292,9 +285,11 @@ let explorer = {
 	},
 
 	makeMove: function(newPos){
+		map.setExplorer(explorer.pos.x, explorer.pos.y, false);
     	explorer.currentMove += 1;
     	explorer.onBoard.energy -= 1;
     	Object.assign(explorer.pos, newPos);
+    	explorer.setDistance();
     	map.reveal(explorer.pos.x, explorer.pos.y, "@");
     	map.setExplorer(newPos.x, newPos.y);
     	explorer.updateView();
