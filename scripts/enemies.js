@@ -154,7 +154,9 @@ let enemies = {
 		},
 
 		defeated: function(){
-			map.setTile(explorer.pos.x, explorer.pos.y, "X");
+			tile = map.getTile(explorer.pos.x, explorer.pos.y);
+			tile.symbol = "X";
+			tile.event = "destroyed hive";
 		},	
 		victorious: function(){
 		},
