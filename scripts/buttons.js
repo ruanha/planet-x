@@ -1,7 +1,8 @@
 "use strict";
 
 let buttons = {
-	cooldowns: {restartReactor:0, activateExtractor:0, extract:0, reactor:0, droid:0},
+	cooldowns: {restartReactor:1000*3, activateExtractor:1000*3, extract:1000*10, reactor:1000*10, droid:1000*10,
+		landBtn:1000*3},
 
 	newButton: function(text, id, costs, onClick=false, cssClass="button"){
 		const button = document.createElement("div");
@@ -64,7 +65,7 @@ let buttons = {
 
 		controlRoom: function(){
 		// SLIDE MENU: CONTROL ROOM
-			let controlRoomMenu = buttons.newButton("Control Room", "controlRoomMenu", {}, this.onClick, "slider");
+			let controlRoomMenu = buttons.newButton("Control Room", "controlRoomMenu", {}, this.onClick, "slider active");
 			controlRoomMenu.setAttribute("slidePos", 0);
 			viewPanel = document.getElementById("viewPanel");
 			viewPanel.appendChild(controlRoomMenu);
@@ -117,11 +118,13 @@ let buttons = {
 
 	landBtn: function(){
 		let onClick = ()=>{
-			if ( !messages.writesMessage ){
+			utils.cooldown(buttons.cooldowns.landBtn, landBtn, landBtn.textContent, function(){
 				landBtn.parentNode.removeChild(landBtn);
 				buttons.restartReactor();
 				game.on = true;
-			}
+				buttons.slideMenu.controlRoom()
+			})
+
 		}
 
 		let landBtn = this.newButton("land ship!", "landBtn", {}, onClick);

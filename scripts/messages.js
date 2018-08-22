@@ -2,12 +2,12 @@
 
 let messages={
 	level: 0,
-	delay: [0, 0, 0],
+	delay: [100, 75, 50],
 	writesMessage: false,
 	onScreen: [],
 	maxMessages:5,
 
-	display: function(messageArray) {
+	display: function(messageArray, _callback) {
 		this.writesMessage = true;
 		let message = messageArray.shift();
 		let delay = this.delay[this.level];
@@ -28,13 +28,15 @@ let messages={
 					setTimeout( f, delay );
 	    		}
 	    		else if ( message !== undefined ){
-	    			messages.display(messageArray);
+	    			messages.display(messageArray, _callback.bind(buttons));
 	    		};
 	    	};
 	    	f();
 		}
 		else {
 			this.writesMessage = false;
+			_callback();
 		};
 	},
+
 }
