@@ -3,6 +3,14 @@ let enemies = {
 		return new this.EnemyFactory(this.submarineBeastObj);
 	},
 
+	missileCruiserBeast: function(){
+		return new this.EnemyFactory(this.missileCruiserBeastObj);
+	},
+
+	battleShipBeast: function(){
+		return new this.EnemyFactory(this.battleShipBeastObj);
+	},
+
 	mineAttackBeast: function(){
 		return new this.EnemyFactory(this.mineAttackerBeastObj);
 	},
@@ -14,6 +22,8 @@ let enemies = {
 	baseAttackBeast: function(){
 		return new this.EnemyFactory(this.baseAttackBeastObj);
 	},
+
+
 
 	EnemyFactory: function(beastObj){
 		this.hitPoints = beastObj.hitPoints;
@@ -47,11 +57,55 @@ let enemies = {
 		},
 
 		defeated: function(){
-			console.log("test, enemy dead")
+			console.log("enemy dead")
 		},
 		victorious: function(){
-			console.log("test, plaayer dead")
+			console.log("player dead")
 		},
+	},
+
+	battleShipBeastObj: {
+		hitPoints:15,
+		damage:2,
+		delay:1500,
+		weaponIcon:"*",
+		icon:"@enemy",
+		titleText:"A Large Alien",
+		messageText:"A large unknown alien attacks.",
+		deadMessage:"Large alien attacker defeated.",
+		loot:{metals:15, energy:15, rare:1},
+
+		playerArrives: function(){
+		},
+
+		defeated: function(){
+			console.log("enemy dead")
+		},
+		victorious: function(){
+			console.log("player dead")
+		},		
+	},
+
+	missileCruiserBeastObj: {
+		hitPoints:30,
+		damage:10,
+		delay:1500,
+		weaponIcon:"<=",
+		icon:"@enemy",
+		titleText:"A Huge Alien",
+		messageText:"A huge unknown alien attacks.",
+		deadMessage:"Huge alien attacker defeated.",
+		loot:{metals:20, energy:15, rare:5},
+
+		playerArrives: function(){
+		},
+
+		defeated: function(){
+			console.log("enemy dead")
+		},
+		victorious: function(){
+			console.log("player dead")
+		},		
 	},
 
 	mineAttackerBeastObj: {

@@ -12,7 +12,7 @@ let game = {
 
 	resume: function(){
 		game.on = true;
-		explorer.deployed = ( explorer.pos == base.pos )? false:true;
+		explorer.deployed = ( explorer.pos.x == base.pos.x && explorer.pos.y == base.pos.y )? false:true;
 	},
 
 	init: function(){

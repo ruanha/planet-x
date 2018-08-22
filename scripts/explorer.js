@@ -11,8 +11,8 @@ let explorer = {
 	shield:0,
 	maxShield:0,
 	health:10,
-	maxHealth:10,
-	weapon:1,
+	maxHealth:100,
+	weapon:100,
 	weaponSpeed:200, //speed of the weapons bullet
 	weaponIcon:"·",
 	plasma:false,
@@ -154,8 +154,18 @@ let explorer = {
 		    	console.log("The ruins of a destroyed hive");
 		    }
 		    // RANDOM ENEMY
-		    else if ( explorer.distanceFromBase > 2 && Math.random() > 0.9999 ) {
-		    	fight.manager("submarineBeast");
+		    else if ( explorer.distanceFromBase > 2  && Math.random() > 0.95 
+		    	&& tile.symbol == '\u00A0' ) {
+		    	if ( explorer.distanceFromBase < 15 ){
+		    		fight.manager("submarineBeast");
+		    	}
+		    	else if ( explorer.distanceFromBase < 35 &&
+		    		 explorer.distanceFromBase > 15 ){
+		    		fight.manager("battleShipBeast");
+		    	}
+		    	else if ( explorer.distanceFromBase > 35 ){
+		    		fight.manager("missileCruiserBeast");
+		    	}		    	
 		    }
 		    // TECH RETRIEVED
 		    else if ( tile.symbol == 'T' ){
