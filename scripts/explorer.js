@@ -6,6 +6,7 @@ let explorer = {
 	activated: false,
 	pos: {x:67, y:25},
 	onBoard: {energy:0, droids:0},
+	cargo: {},
 	currentMove: 0,
 	battery:15,
 	shield:0,
@@ -13,7 +14,7 @@ let explorer = {
 	health:10,
 	maxHealth:10,
 	maxCargo: 10,
-	cargo: 0,
+	cargoWeight: 0,
 	weapon:1,
 	weaponSpeed:200, //speed of the weapons bullet
 	weaponIcon:"·",
@@ -51,10 +52,12 @@ let explorer = {
 	},
 
 	updateMonitor: function(){
+		// this is the monitor on the planet-x view
 		const explorerMonitor = document.getElementById("planet-monitor-explorer");
 		while (explorerMonitor.firstChild){
 			explorerMonitor.removeChild(explorerMonitor.firstChild)
 		}
+		//update onboard items
 		for ( key in explorer.onBoard ){
 			let div = document.createElement("div");
 			div.setAttribute("id", "onboard-"+key);
@@ -62,16 +65,29 @@ let explorer = {
 			div.textContent = key+":"+explorer.onBoard[key];
 			explorerMonitor.appendChild(div)
 		}
+		//update cargo items (metals and other resources)
+		for ( key in explorer.cargo ){
+			let div = document.createElement("div");
+			div.setAttribute("id", "onboard-"+key);
+			div.setAttribute("class", "onboard");
+			div.textContent = key+":"+explorer.cargo[key];
+			explorerMonitor.appendChild(div)
+		}		
 		hitPointCounter = document.createElement("div");
 		hitPointCounter.setAttribute("id", "hit-point-counter");
 		hitPointCounter.textContent = "hp: "+explorer.health+"/"+explorer.maxHealth;
 
 		cargoSpace = document.createElement("div");
 		cargoSpace.setAttribute("id", "cargo-space");
-		cargoSpace.textContent = "cargo: "+explorer.cargo+"/"+explorer.maxCargo;
+		cargoSpace.textContent = "cargo: "+explorer.cargoWeight+"/"+explorer.maxCargo;
 
 		explorerMonitor.appendChild(hitPointCounter)
 		explorerMonitor.appendChild(cargoSpace)
+
+	},
+
+	cargoMove: function(){
+		// move cargo to or from cargo object
 
 	},
 
@@ -148,6 +164,12 @@ let explorer = {
 			    	map.reveal(explorer.pos.x, explorer.pos.y, "");
 			    	explorer.health = explorer.maxHealth;
 			    	explorer.shield = explorer.maxShield;
+
+			    	for ( let key in explorer.cargo ){
+			    		resources[key] = (resources[key])? resources[key]+explorer.cargo[key]:explorer.cargo[key];
+			    		resourcePanel.updateViewResource(key)
+			    	}
+			    	explorer.cargo = {};
 
 			    	document.getElementById("explorerMenu").click()
 		    	}

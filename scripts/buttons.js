@@ -530,13 +530,13 @@ let buttons = {
 				}
 				else {
 					if ( fight.enemy.loot[key] > 0  ){
-						explorer.onBoard[key] += 1;
+						explorer.cargo[key] = (explorer.cargo[key])? explorer.cargo[key]+1:1;
 						button.textContent = key+" ["+(fight.enemy.loot[key]-=1)+"]";
 						explorer.updateView();
 					}
 				}
 			};
-
+			explorer.updateMonitor();
 			let button = buttons.newButton(key+" ["+fight.enemy.loot[key]+"]", "loot-"+key, {}, onClick);
 			lootBtns.push(button);
 
