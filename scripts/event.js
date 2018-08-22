@@ -12,7 +12,7 @@ let event = {
 		event.message = message;
 		game.pause();
 		
-		onClick = ()=>{
+		let onClick = ()=>{
 			if ( explorer.onBoard.droids > 0){
 				explorer.onBoard.droids -= 1;
 				let offbaseObj = offBase.getOffbaseAtPos(x, y);
@@ -114,15 +114,17 @@ let event = {
 		midPanel = this.displayMidPanel();
 		bottomPanel = this.displayBottomPanel();
 
+		let closeBtn = this.closeBtn();
+
+		eventPanel = this.displayEventText(event.titleText, event.message);
+
 		if ( battle ){
 			event.titleText = fight.enemy.titleText;
 			event.message = fight.enemy.messageText;
 			topPanel = this.displayFight(topPanel);
+			closeBtn.setAttribute("class", "button disabled")
 		}
 
-		eventPanel = this.displayEventText(event.titleText, event.message);
-
-		let closeBtn = this.closeBtn();
 
 		for ( i=0; i<buttons.length; i++){
 			midPanel.appendChild(buttons[i]);
@@ -136,17 +138,14 @@ let event = {
 	},
 
 	closeBtn: function(){
-		onClick = ()=>{
-			eventPanel.parentNode.removeChild(eventPanel);
-			game.resume();
+		let onClick = ()=>{
+			let closeBtn = document.getElementById("close-button")
+			if ( closeBtn.className != "button disabled" ){
+				eventPanel.parentNode.removeChild(eventPanel);
+				game.resume();				
+			}
 		}
-
 		return buttons.newButton("close", "close-button", {}, onClick);
-	},
-
-	enableCloseBtn: function(){
-		let closeBtn = document.getElementById("close-button");
-		closeBtn.disabled = false;
 	},
 
 	animation: function(icon, shooter, damage){
