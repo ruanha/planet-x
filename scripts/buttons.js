@@ -101,6 +101,8 @@ let buttons = {
 				let resourcePanel = document.getElementById("resourcePanel");
 				resourcePanel.style.visibility='hidden';
 				explorer.updateMonitor();
+				explorer.deployed = true;
+				explorer.exploring();
 			})
 
 		},
@@ -290,15 +292,7 @@ let buttons = {
 
 	deployBtn: function(){
 		let onClick = ()=>{
-			if ( !explorer.actvated ) {
-				//if first time to deploy
-				explorer.actvated = true
-				document.getElementById("planetMenu").click();
-			}
-			explorer.deployed = true;
-			Object.assign(explorer.pos, base.pos);
-			explorer.exploring();			
-		}
+			document.getElementById("planetMenu").click();		}
 
 		const explorerPanel = document.getElementById("explorer-panel");
 		let deployBtn = buttons.newButton("deploy!", "deploy-button", {}, onClick)
