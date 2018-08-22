@@ -170,6 +170,7 @@ let explorer = {
 			    		resourcePanel.updateViewResource(key)
 			    	}
 			    	explorer.cargo = {};
+			    	explorer.cargoWeight = 0;
 
 			    	document.getElementById("explorerMenu").click()
 		    	}

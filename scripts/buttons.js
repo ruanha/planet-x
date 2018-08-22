@@ -525,12 +525,15 @@ let buttons = {
 				if ( key == "energy" ){
 					if ( fight.enemy.loot[key] > 0 && explorer.charge() ){
 						button.textContent = key+" ["+(fight.enemy.loot[key]-=1)+"]";
+						explorer.updateMonitor();
 						explorer.updateView();
 					}
 				}
 				else {
-					if ( fight.enemy.loot[key] > 0  ){
+					if ( fight.enemy.loot[key] > 0 && explorer.cargoWeight < explorer.maxCargo){
 						explorer.cargo[key] = (explorer.cargo[key])? explorer.cargo[key]+1:1;
+						explorer.cargoWeight += 1;
+						explorer.updateMonitor();
 						button.textContent = key+" ["+(fight.enemy.loot[key]-=1)+"]";
 						explorer.updateView();
 					}
