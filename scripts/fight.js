@@ -52,7 +52,7 @@ let fight = {
 	},
 
 	enemyAttack: function(){
-		event.animation(fight.enemy.weaponIcon, fight.enemy.icon, fight.enemy.damage);
+		event.animation(fight.enemy.weaponIcon, fight.enemy.icon, 200);
 		setTimeout(function(){
 			if ( explorer.shield > 0 ){
 				explorer.shield -= fight.enemy.damage;
@@ -67,7 +67,7 @@ let fight = {
 			if ( explorer.health <= 0 ){
 				fight.playerDead();
 			}
-		}, this.enemy.delay );
+		}, 200*6 );
 	},
 
 	playerAttack: function(damage){

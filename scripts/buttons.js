@@ -545,7 +545,7 @@ let buttons = {
 				utils.cooldown(2000, fireWeapon, "fire weapon", function(){
 					fireWeapon.setAttribute("class", "button");
 				});
-				event.animation(explorer.weaponIcon, fight.player.icon, explorer.weapon);
+				event.animation(explorer.weaponIcon, fight.player.icon, explorer.weaponSpeed);
 				setTimeout(fight.playerAttack.bind(fight), explorer.weaponSpeed*NUMBER_OF_CELLS, explorer.weapon);
 			}
 			
@@ -558,7 +558,7 @@ let buttons = {
 				utils.cooldown(2000, plasmaWeapon, "plasma weapon", function(){
 					plasmaWeapon.setAttribute("class", "button");
 				});
-				event.animation(explorer.plasmaIcon, fight.player.icon, explorer.plasma);
+				event.animation(explorer.plasmaIcon, fight.player.icon, explorer.plasmaSpeed);
 				setTimeout(fight.playerAttack.bind(fight), explorer.plasmaSpeed*NUMBER_OF_CELLS, explorer.plasma);
 
 			}			
@@ -571,7 +571,7 @@ let buttons = {
 				utils.cooldown(2000, slowdown, "slowdown", function(){
 					slowdown.setAttribute("class", "button");
 				});
-				event.animation(explorer.slowdownIcon, fight.player.icon, explorer.slowdown);
+				event.animation(explorer.slowdownIcon, fight.player.icon, explorer.slowdownSpeed);
 				setTimeout(fight.playerAttack.bind(fight), explorer.slowdownSpeed*NUMBER_OF_CELLS, explorer.slowdown);
 
 			}			
