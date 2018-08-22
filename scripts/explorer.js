@@ -4,7 +4,7 @@ let explorer = {
 	initialized: false,
 	deployed: false,
 	activated: false,
-	pos: {x:67, y:25},
+	pos: {x:65, y:25},
 	onBoard: {energy:0, droids:0},
 	cargo: {},
 	currentMove: 0,

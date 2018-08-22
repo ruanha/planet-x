@@ -5,7 +5,7 @@ let base = {
 	reactorActive: false,
 	extractorActive: false,
 	droids: {}, //will contain: idle, reactor, extractor
-	pos: {x:67, y:25},
+	pos: {x:65, y:25},
 	cores:1,
 	underAttack: false,
 	underAttackTimer: undefined,
