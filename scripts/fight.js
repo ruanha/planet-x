@@ -71,14 +71,22 @@ let fight = {
 	},
 
 	playerAttack: function(damage){
-		this.enemy.hitPoints -= damage;
-		console.log("player attack!")
-		if ( this.enemy.hitPoints <= 0 ){
-			fight.enemyDead();
+		console.log(damage);
+		if ( damage == "slow"){
+			fight.enemy.delay = Math.round(fight.enemy.delay * 3);
+			clearInterval(fight.enemy.interval);
+			fight.enemy.interval = setInterval(fight.enemyAttack.bind(fight), fight.enemy.delay);
 		}
-		else {
-			document.getElementById("enemy-health-bar").textContent = "health   "+ this.enemy.hitPoints;
-		}	
+		else{
+			this.enemy.hitPoints -= damage;
+			console.log("player attack!")
+			if ( this.enemy.hitPoints <= 0 ){
+				fight.enemyDead();
+			}
+			else {
+				document.getElementById("enemy-health-bar").textContent = "health   "+ this.enemy.hitPoints;
+			}				
+		}
 	},
 }
 

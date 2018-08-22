@@ -148,10 +148,10 @@ let event = {
 		return buttons.newButton("close", "close-button", {}, onClick);
 	},
 
-	animation: function(icon, shooter, damage){
+	animation: function(icon, shooter){
 		cellIndex = ( shooter == "@explorer" )? 0:NUMBER_OF_CELLS-1 ;
 
-		function recursive(icon, shooter, damage, cellIndex){
+		function recursive(icon, shooter, cellIndex){
 			if ( shooter == "@explorer" ){
 				// end recursive condition for @explorer
 				if ( cellIndex == NUMBER_OF_CELLS ){
@@ -166,8 +166,7 @@ let event = {
 
 					let cell = document.getElementById("cell-"+cellIndex)
 					cell.textContent = icon;
-					setTimeout( recursive, 200, icon, shooter, damage, cellIndex+1  );
-					//recursive(icon, shooter, damage, cellIndex)
+					setTimeout( recursive, 200, icon, shooter, cellIndex+1  );
 				}
 			}	
 			else {
@@ -184,12 +183,12 @@ let event = {
 					}
 					let cell = document.getElementById("cell-"+cellIndex)
 					cell.textContent = icon;
-					setTimeout( recursive, 200, icon, shooter, damage, cellIndex  );
-					//recursive(icon, shooter, damage, cellIndex)					
+					setTimeout( recursive, 200, icon, shooter, cellIndex  );
+					//recursive(icon, shooter, cellIndex)					
 				}
 			}
 		}
-		recursive(icon, shooter, damage, cellIndex);
+		recursive(icon, shooter, cellIndex);
 		
 	},
 

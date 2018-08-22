@@ -13,7 +13,7 @@ let base = {
 	output: function(){
 		//BASE EXTRACTOR
 		if ( base.droids.extractor ) {
-			for ( i=0; i<base.droids.extractor; i++ ){
+			for ( let i=0; i<base.droids.extractor; i++ ){
 				//let resourceList = ["metals", "metals", "metals", "metals", "metals", "metals", "metals", "metals", "uran", "rare"];
 				//let randomResource = resourceList[ Math.floor( Math.random()*resourceList.length ) ];
 				resources.metals += 1;

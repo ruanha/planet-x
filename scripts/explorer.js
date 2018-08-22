@@ -21,9 +21,13 @@ let explorer = {
 	plasma:false,
 	plasmaSpeed:400, //speed of the plasma weapons bullet
 	plasmaIcon:"o",
+	slowdown:false,
+	slowdownSpeed:1000,
+	slowdownIcon:"#",
 	amphibious:false,
 	distanceFromBase:0,
-	upgradeCooldowns:{ batteryI:5000, batteryII:10000, shieldI:5000, shieldII:10000, shieldIII:20000 },
+	upgradeCooldowns:{ batteryI:5000, batteryII:10000, batteryIII:20000, batteryIV:50000,
+	 shieldI:5000, shieldII:10000, shieldIII:20000 },
 
 	init: function(){
 		const explorerView = document.getElementById("explorerView");
@@ -95,6 +99,35 @@ let explorer = {
 		switch (explorer.techLevel){
 			case 1:
 			buttons.upgBatteryBtn();
+			buttons.upgShieldBtn();
+			break;
+
+			case 2:
+			upgShieldBtn = document.getElementById("upgrade-shield-button");
+			upgShieldBtn.setAttribute("class", "tooltip button");
+			upgBatteryBtn = document.getElementById("upgrade-battery-button");
+			upgBatteryBtn.setAttribute("class", "tooltip button");
+			buttons.upgPlasmaBtn();
+			break;
+
+			case 3:
+			upgShieldBtn = document.getElementById("upgrade-shield-button");
+			upgShieldBtn.setAttribute("class", "tooltip button");
+			upgBatteryBtn = document.getElementById("upgrade-battery-button");
+			upgBatteryBtn.setAttribute("class", "tooltip button");
+			buttons.upgAmphibious();
+			break;
+
+			case 4:
+			//Amphibous, ultimate battery
+			upgBatteryBtn = document.getElementById("upgrade-battery-button");
+			upgBatteryBtn.setAttribute("class", "tooltip button");
+			buttons.upgSlowBomb();
+			break;
+
+			case 5:
+			//final solution, satelite
+			buttons.upgSatellite();
 			break;
 		}
 		explorer.updateMonitor();
@@ -198,7 +231,7 @@ let explorer = {
 
 		    }
 		    // TILE == HIVE
-		    else if ( tile.symbol == 'H' ){
+		    else if ( tile.symbol == 'H' && explorer.amphibious){
 		    	explorer.makeMove(newPos);
 		    	fight.manager("hiveAttackBeast");
 		    }
@@ -227,7 +260,20 @@ let explorer = {
 		    	tile.symbol = ' ';
 		    	explorer.upgrade();
 		    }
-		    else{
+		    else if ( tile.symbol == '*' ){
+		    	if ( explorer.amphibious ){
+			    	explorer.currentMove += 1;
+			    	explorer.onBoard.energy -= 1;
+			    	map.objectMap[explorer.pos.y][explorer.pos.x].explorer = false;
+			    	Object.assign(explorer.pos, newPos);
+			    	explorer.setDistance();
+			    	explorer.makeMove(newPos);
+		    	}
+		    	else {
+		    		messages.display([">> needs amphibious upgrade"])
+		    	}
+		    }
+		    else if ( tile.symbol == '\u00A0' ){
 		    	explorer.currentMove += 1;
 		    	explorer.onBoard.energy -= 1;
 		    	map.objectMap[explorer.pos.y][explorer.pos.x].explorer = false;

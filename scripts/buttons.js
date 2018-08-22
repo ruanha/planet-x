@@ -308,19 +308,31 @@ let buttons = {
 	upgBatteryBtn: function(){
 		let cost = {metals:20, rare:10}
 		let onClick = ()=>{
-			if ( upgBatteryBtn.className == "tooltip button" ){
+			if ( upgBatteryBtn.className == "tooltip button" && utils.canBuy(cost) ){
+				resources.subtract(cost);
 				if ( explorer.battery == 15 ){
 					upgBatteryBtn.setAttribute("class", "tooltip button disabled");
 					utils.cooldown(explorer.upgradeCooldowns["batteryI"], upgBatteryBtn, "upgrade battery II", function(){
 						explorer.battery += 15;
-						upgBatteryBtn.setAttribute("class", "tooltip button");
 					});
 				}
-				else if ( explorer.battery == 30  ){
+				else if ( explorer.battery == 30 ){
 					upgBatteryBtn.setAttribute("class", "tooltip button disabled");
-					utils.cooldown(explorer.upgradeCooldowns["batteryI"], upgBatteryBtn, "upgrade battery II", function(){
+					utils.cooldown(explorer.upgradeCooldowns["batteryII"], upgBatteryBtn, "upgrade battery III", function(){
 						explorer.battery += 15;
 					});
+				}
+				else if ( explorer.battery == 45 ){
+					upgBatteryBtn.setAttribute("class", "tooltip button disabled");
+					utils.cooldown(explorer.upgradeCooldowns["batteryIII"], upgBatteryBtn, "upgrade battery IV", function(){
+						explorer.battery += 15;
+					});					
+				}
+				else if ( explorer.battery == 60 ){
+					upgBatteryBtn.setAttribute("class", "tooltip button disabled");
+					utils.cooldown(explorer.upgradeCooldowns["batteryIV"], upgBatteryBtn, "upgrade battery IV", function(){
+						explorer.battery = 1000;
+					});						
 				}
 
 			}
@@ -334,31 +346,45 @@ let buttons = {
 	upgPlasmaBtn: function(){
 		let cost = {metals:20, rare:10}
 		let onClick = ()=>{
-			if ( upgPlasmaBtn.className == "tooltip button" ){
+			if ( upgPlasmaBtn.className == "tooltip button" && utils.canBuy(cost) ){
+				resources.subtract(cost);
 				explorer.plasma = 5;
 				upgPlasmaBtn.setAttribute("class", "tooltip button disabled");
 			}
 		}
-		let upgPlasmaBtn = utils.newButton("upgrade plasma weapon", "upgrade-plasma-button", cost, onClick);
+		let upgPlasmaBtn = buttons.newButton("upgrade plasma weapon", "upgrade-plasma-button", cost, onClick);
 		const explorerPanel = document.getElementById("explorer-panel");
 		explorerPanel.appendChild(upgPlasmaBtn);
+	},
+
+	upgSlowBomb: function(){
+		let cost = {metals:20, rare:10}
+		let onClick = ()=>{
+			if ( upgSlowBombBtn.className == "tooltip button" && utils.canBuy(cost) ){
+				resources.subtract(cost);
+				explorer.slowdown = "slow";
+				upgSlowBombBtn.setAttribute("class", "tooltip button disabled");
+			}
+		}
+		let upgSlowBombBtn = buttons.newButton("upgrade slowdown", "upgrade-slowdown-button", cost, onClick);
+		const explorerPanel = document.getElementById("explorer-panel");
+		explorerPanel.appendChild(upgSlowBombBtn);
 	},
 
 	upgShieldBtn: function(){
 		let cost = {metals:20, rare:10}
 		let onClick = ()=>{
-			if ( upgShieldBtn.className == "tooltip button" ){
+			if ( upgShieldBtn.className == "tooltip button" && utils.canBuy(cost) ){
+				resources.subtract(cost);
 				upgShieldBtn.setAttribute("class", "tooltip button disabled");
 				if ( explorer.maxShield == 0 ){
 					utils.cooldown(explorer.upgradeCooldowns["shieldI"], upgShieldBtn, "upgrade shield II", function(){
 						explorer.maxShield += 5;
-						upgShieldBtn.setAttribute("class", "tooltip button");
 					});					
 				}
 				else if ( explorer.maxShield == 5 ){
 					utils.cooldown(explorer.upgradeCooldowns["shieldII"], upgShieldBtn, "upgrade shield III", function(){
 						explorer.maxShield += 5;
-						upgShieldBtn.setAttribute("class", "tooltip button");
 					});						
 				}
 				else if ( explorer.maxShield == 10 ){
@@ -369,9 +395,41 @@ let buttons = {
 			}
 		}
 
-		let upgShieldBtn = utils.newButton("upgrade shield", "upgrade-shield-button", cost, onClick);
+		let upgShieldBtn = buttons.newButton("upgrade shield", "upgrade-shield-button", cost, onClick);
 		const explorerPanel = document.getElementById("explorer-panel");
 		explorerPanel.appendChild(upgShieldBtn);
+	},
+
+	upgAmphibious: function(){
+		let cost = {metals:20, rare:10}
+		let onClick = ()=>{
+			if ( upgAmphibiousBtn.className == "tooltip button" && utils.canBuy(cost) ){
+				resources.subtract(cost);
+				upgAmphibiousBtn.setAttribute("class", "tooltip button disabled");
+				explorer.amphibious = true;
+			}
+
+		}
+
+		let upgAmphibiousBtn = buttons.newButton("amphibious", "upgrade-amphibious-button", cost, onClick);
+		const explorerPanel = document.getElementById("explorer-panel");
+		explorerPanel.appendChild(upgAmphibiousBtn);
+	},
+
+	upgSatellite: function(){
+		let cost = {metals:20, rare:10}
+		let onClick = ()=>{
+			if ( upgSatelliteBtn.className == "tooltip button" && utils.canBuy(cost) ){
+				upgSatelliteBtn.setAttribute("class", "tooltip button disabled");
+				resources.subtract(cost);
+				map.revealMap();
+			}
+
+		}
+
+		let upgSatelliteBtn = buttons.newButton("satellite", "upgrade-satellite-button", cost, onClick);
+		const explorerPanel = document.getElementById("explorer-panel");
+		explorerPanel.appendChild(upgSatelliteBtn);	
 	},
 
 	addDroids: function(type, includeController=false){
@@ -507,7 +565,26 @@ let buttons = {
 		}
 		let plasmaWeapon = buttons.newButton("plasma weapon", "plasma-weapon", {}, onClickPlasma);
 
-		if ( explorer.plasma ){
+		let onClickSlowdown = ()=>{
+			if ( slowdown.className == "button" ){
+				slowdown.setAttribute("class", "button disabled");
+				utils.cooldown(2000, slowdown, "slowdown", function(){
+					slowdown.setAttribute("class", "button");
+				});
+				event.animation(explorer.slowdownIcon, fight.player.icon, explorer.slowdown);
+				setTimeout(fight.playerAttack.bind(fight), explorer.slowdownSpeed*NUMBER_OF_CELLS, explorer.slowdown);
+
+			}			
+		}
+		let slowdown = buttons.newButton("slowdown", "slowdown", {}, onClickSlowdown);		
+
+		if ( explorer.plasma && explorer.slowdown){
+			return [chargeShield, fireWeapon, plasmaWeapon, slowdown];
+		}
+		else if ( explorer.plasma ){
+			return [chargeShield, fireWeapon, plasmaWeapon];
+		}
+		else if ( explorer.slowdown ){
 			return [chargeShield, fireWeapon, plasmaWeapon];
 		}
 		else{
