@@ -261,13 +261,14 @@ div.rowVal {
 }
 
 .controller{
-  margin:1px;
-  text-align: center;
-  border:1px solid black;
-  width: 15px;
-  overflow: hidden;
-  display: inline-block;
-  white-space: nowrap;
+	cursor:default;
+	margin:1px;
+	text-align: center;
+	border:1px solid black;
+	width: 15px;
+	overflow: hidden;
+	display: inline-block;
+	white-space: nowrap;
 }
 
 #explorer-view-left{

@@ -11,6 +11,7 @@ let utils = {
 				let linearGradient = "linear-gradient(to right, gray, gray "+ percentage+
 				"%, transparent "+ percentage+"%)";
 				button.style.backgroundImage = linearGradient
+				button.style.opacity = "1"; 
 				callback();
 				return time;
 			}

@@ -119,6 +119,7 @@ let buttons = {
 	landBtn: function(){
 		let onClick = ()=>{
 			if ( landBtn.className !=  "button disabled"){
+				landBtn.setAttribute("class", "button disabled");
 				utils.cooldown(buttons.cooldowns.landBtn, landBtn, landBtn.textContent, function(){
 					landBtn.parentNode.removeChild(landBtn);
 					buttons.restartReactor();
@@ -127,6 +128,7 @@ let buttons = {
 				})				
 			}
 		}
+
 
 		let landBtn = this.newButton("land ship!", "landBtn", {}, onClick);
 
