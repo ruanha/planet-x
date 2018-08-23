@@ -40,7 +40,6 @@ let map = {
 				else if ( this.fullMap[i][j] == "T" ){
 					tile.symbol = "T";
 					tile.tileEvent = "Tech";
-					tile.visible = true;
 				}
 				else {
 					tile.symbol = "\u00A0";
