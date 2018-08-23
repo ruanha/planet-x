@@ -274,7 +274,7 @@ let explorer = {
 	makeMove: function(newPos){
 		map.setExplorer(explorer.pos.x, explorer.pos.y, false);
     	explorer.currentMove += 1;
-    	explorer.onBoard.energy -= 0.5;
+    	explorer.onBoard.energy -= 1;
     	Object.assign(explorer.pos, newPos);
     	explorer.setDistance();
     	map.reveal(explorer.pos.x, explorer.pos.y, "@");

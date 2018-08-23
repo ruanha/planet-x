@@ -594,20 +594,21 @@ let buttons = {
 
 			}			
 		}
-		let slowdown = buttons.newButton("slowdown", "slowdown", {}, onClickSlowdown);		
+		let slowdown = buttons.newButton("slowdown", "slowdown", {}, onClickSlowdown);	
 
-		if ( explorer.plasma && explorer.slowdown){
-			return [chargeShield, fireWeapon, plasmaWeapon, slowdown];
+		let availableBattleButtons = [fireWeapon];
+
+		if ( explorer.plasma ){
+			availableBattleButtons.push(plasmaWeapon);
 		}
-		else if ( explorer.plasma ){
-			return [chargeShield, fireWeapon, plasmaWeapon];
+		if ( explorer.slowdown ){
+			availableBattleButtons.push(slowdown);
 		}
-		else if ( explorer.slowdown ){
-			return [chargeShield, fireWeapon, plasmaWeapon];
+		if ( explorer.maxShield ){
+			availableBattleButtons.push(chargeShield);
 		}
-		else{
-			return [chargeShield, fireWeapon];
-		}
+
+		return availableBattleButtons
 		
 	},
 
