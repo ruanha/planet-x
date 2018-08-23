@@ -10,37 +10,6 @@ let resourcePanel = {
 	updateViewBase: function(resource){
 		let res = document.getElementById(resource+"-quant");
 		res.textContent = base.droids[resource];
-
-		if ( resource in base.droids ){
-			console.log(resource)
-			let name = document.getElementById(resource+"-name");
-			name.setAttribute("class", "tooltip")
-
-			let tooltipText = document.createElement("div");
-			tooltipText.setAttribute("class", "tooltiptext");
-			tooltipText.setAttribute("id", resource+"-droid-tooltip");
-
-			let quickRow = (rowLeftContent, rowRightContent, tooltipText)=>{
-				let rowLeft = document.createElement("div");
-				rowLeft.setAttribute("class", "rowKey");
-
-				let rowRight = document.createElement("div");
-				rowRight.setAttribute("class", "rowVal");
-
-				rowLeft.textContent = rowLeftContent;
-				rowRight.textContent = rowRightContent;
-				tooltipText.appendChild(rowLeft);
-				tooltipText.appendChild(rowRight);
-			}
-
-			if ( resource == "reactor" ){
-				quickRow(base.droids.reactor+" droid(s) produce:", base.droids.reactor*base.cores+"/10s", tooltipText);
-				name.appendChild(tooltipText);
-			}
-			else if ( resource == "extractor" ){
-
-			}
-		}
 	},	
 
 	addResource: function(list){
@@ -63,66 +32,16 @@ let resourcePanel = {
 	},
 
 	addBaseHeader: function(type){
-		let baseMonitorTable = document.getElementById("base-monitor-table");
+		let baseMonitor = document.getElementById("base-monitor");
 
-		let newRow = document.createElement("tr");
-		let baseThing = document.createElement("td");
+		let newRow = document.createElement("div");
+		let baseThing = document.createElement("div");
 
 		baseThing.textContent = type;
 		baseThing.setAttribute("class", "monitor-header");
 
 		newRow.appendChild(baseThing);
-		baseMonitorTable.appendChild(newRow);
-	},
-
-	addBase: function(type, includeController=false){
-		let baseMonitorTable = document.getElementById("base-monitor-table");
-
-		let newRow = document.createElement("tr");
-		let baseThing = document.createElement("td");
-		let baseThingQuantity = document.createElement("td");
-		newRow.setAttribute("id", type.replace(/ /g,''));
-		baseThing.setAttribute("id", type.replace(/ /g,'')+"-name");
-		baseThingQuantity.setAttribute("id", type.replace(/ /g,'')+"-quant");
-
-		baseThing.textContent = type;
-		baseThingQuantity.textContent = 0;
-
-		newRow.appendChild(baseThing);
-		newRow.appendChild(baseThingQuantity);
-
-		if ( includeController ){
-			let subtract = document.createElement("td");
-			subtract.setAttribute("class", "controller");
-			subtract.setAttribute("id", type.replace(/ /g,'')+"-subtract");	
-			subtract.textContent = "-";
-			subtract.addEventListener('click', ()=>{
-				if ( base.droids[type] ){
-					base.droids["idle"] +=1;
-					base.droids[type] -=1 ;
-					this.updateViewBase("idle");
-					this.updateViewBase(type);
-				}
-			});
-					
-			let add = document.createElement("td");
-			add.setAttribute("class", "controller");
-			add.setAttribute("id", type.replace(/ /g,'')+"-add");
-			add.textContent = "+";
-			add.addEventListener('click', ()=>{
-				if ( base.droids["idle"] ){
-					base.droids["idle"] -=1
-					base.droids[type] +=1 ;	
-					this.updateViewBase("idle");
-					this.updateViewBase(type);		
-				}
-			});
-
-			newRow.appendChild(subtract);
-			newRow.appendChild(add);
-		}
-
-		baseMonitorTable.appendChild(newRow);
+		baseMonitor.appendChild(newRow);
 	},
 }
 

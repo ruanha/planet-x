@@ -49,10 +49,7 @@ let views={
 		const baseMonitor = document.createElement("div");
 		baseMonitor.setAttribute("id", "base-monitor");
 		baseMonitor.setAttribute("data-legend", "base");
-		const baseMonitorTable = document.createElement("table");
-		baseMonitorTable.setAttribute("id", "base-monitor-table");
 
-		baseMonitor.appendChild(baseMonitorTable);
 		resourcePanel.appendChild(baseMonitor);
 		resourceMonitor.appendChild(resourceMonitorTable);
 		resourcePanel.appendChild(resourceMonitor);
@@ -70,11 +67,27 @@ let views={
 		controlRoomView.textContent = "Actions:"
 		view.appendChild(controlRoomView);
 
+		// BASE VIEW
 
 		let baseView = document.createElement("div");
 		baseView.setAttribute("class", "views");
 		baseView.setAttribute("id", "baseView");
-		baseView.textContent = "Work:"
+
+
+
+		let baseViewLeft = document.createElement("div");
+		baseViewLeft.setAttribute("id", "base-view-left");
+		baseViewLeft.setAttribute("class", "view-left");
+		baseViewLeft.textContent = "Work:";
+
+		let baseViewRight = document.createElement("div");
+		baseViewRight.setAttribute("id", "base-view-right");
+		baseViewRight.setAttribute("class", "view-right");
+		baseViewRight.textContent = "Droids:";
+		
+		baseView.appendChild(baseViewLeft)
+		baseView.appendChild(baseViewRight)
+
 		view.appendChild(baseView);
 
 		// EXPLORER VIEW
@@ -85,10 +98,12 @@ let views={
 
 		let explorerViewLeft = document.createElement("div");
 		explorerViewLeft.setAttribute("id", "explorer-view-left");
+		explorerViewLeft.setAttribute("class", "view-left");
 		explorerViewLeft.textContent = "Build:";
 
 		let explorerViewRight = document.createElement("div");
 		explorerViewRight.setAttribute("id", "explorer-view-right");
+		explorerViewRight.setAttribute("class", "view-right");
 		explorerViewRight.textContent = "Upgrade:";
 
 		explorerView.appendChild(explorerViewLeft)

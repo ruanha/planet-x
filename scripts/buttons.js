@@ -144,13 +144,9 @@ let buttons = {
 
 				utils.cooldown(buttons.cooldowns.restartReactor, restartReactorBtn, restartReactorBtn.textContent, function(){
 					buttons.slideMenu.base();
-					let baseView = document.getElementById("baseView");
 					buttons.reactor();
 					resourcePanel.addResource(["energy"]);
-					//resourcePanel.addBaseHeader("Activated")
-					//resourcePanel.addBase("cores");
 					base.cores = 1;
-					//resourcePanel.updateViewBase("cores");
 					document.getElementById("resourcePanel").style.visibility = "visible";
 					buttons.activateExtractor();
 				});					
@@ -193,8 +189,8 @@ let buttons = {
 			}
 		};
 		let button = buttons.newButton("extract", "extract", cost, onClick);
-		const baseView = document.getElementById("baseView");
-		baseView.appendChild(button);
+		const baseViewLeft = document.getElementById("base-view-left");
+		baseViewLeft.appendChild(button);
 	},
 
 	reactor: function(){
@@ -210,8 +206,8 @@ let buttons = {
 			}
 		};
 		let button = buttons.newButton("reactor", "reactor", cost, onClick);
-		const baseView = document.getElementById("baseView");
-		baseView.appendChild(button);
+		const baseViewLeft = document.getElementById("base-view-left");
+		baseViewLeft.appendChild(button);
 	},
 
 
@@ -240,9 +236,9 @@ let buttons = {
 
 		// add droids to base panel
 		resourcePanel.addBaseHeader("droids");
-		resourcePanel.addBase("idle");
-		resourcePanel.addBase("reactor", true);
-		resourcePanel.addBase("extractor", true);
+		buttons.addBase("idle", false);
+		buttons.addBase("reactor", true);
+		buttons.addBase("extractor", true);
 		base.droids = {idle:0, reactor:0, extractor:0};
 	},
 
@@ -264,8 +260,8 @@ let buttons = {
 			
 		}
 		let droidBtn = buttons.newButton("droid", "droid-button", cost, onClick)
-		const baseView = document.getElementById("baseView");
-		baseView.appendChild(droidBtn);
+		const baseViewLeft = document.getElementById("base-view-left");
+		baseViewLeft.appendChild(droidBtn);
 	},
 
 	//EXPLORER BUTTONS
@@ -641,5 +637,81 @@ let buttons = {
 
 		};
 		return lootBtns;
+	},
+
+	addBase: function(type, includeController){
+		console.log(type, includeController)
+		let baseMonitor = document.getElementById("base-monitor");
+
+		let newRow = document.createElement("div");
+		let baseThing = document.createElement("div");
+		let baseThingQuantity = document.createElement("div");
+		newRow.setAttribute("id", type.replace(/ /g,'')+"-row");
+		newRow.setAttribute("class", "row");
+		baseThing.setAttribute("id", type.replace(/ /g,'')+"-name");
+		baseThing.setAttribute("class", "rowKey");
+		baseThingQuantity.setAttribute("id", type.replace(/ /g,'')+"-quant");
+		baseThingQuantity.setAttribute("class", "rowVal");
+
+		baseThing.textContent = type;
+		baseThingQuantity.textContent = 0;
+
+		newRow.appendChild(baseThing);
+		newRow.appendChild(baseThingQuantity);
+		baseMonitor.appendChild(newRow);	
+
+
+		if ( includeController ){
+			let baseMonitor = document.getElementById("base-monitor");
+
+			let newerRow = document.createElement("div");
+			let baseThing = document.createElement("div");
+			//let baseThingQuantity = document.createElement("div");
+			newerRow.setAttribute("id", "base-view-"+type.replace(/ /g,'')+"-row");
+			newerRow.setAttribute("class", "row");
+			baseThing.setAttribute("id", "base-view-"+type.replace(/ /g,'')+"-name");
+			baseThing.setAttribute("class", "rowKey");
+			//baseThingQuantity.setAttribute("id", "base-view"+type.replace(/ /g,'')+"-quant");
+			//baseThingQuantity.setAttribute("class", "rowVal");
+
+			baseThing.textContent = type;
+			//baseThingQuantity.textContent = 0;
+
+			newerRow.appendChild(baseThing);
+			//newerRow.appendChild(baseThingQuantity);
+			baseMonitor.appendChild(newerRow);
+
+			let baseViewRight = document.getElementById("base-view-right");
+			let subtract = document.createElement("div");
+			subtract.setAttribute("class", "controller");
+			subtract.setAttribute("id", "base-view-"+type.replace(/ /g,'')+"-subtract");	
+			subtract.textContent = "-";
+			subtract.addEventListener('click', ()=>{
+				if ( base.droids[type] ){
+					base.droids["idle"] +=1;
+					base.droids[type] -=1 ;
+					resourcePanel.updateViewBase("idle");
+					resourcePanel.updateViewBase(type);
+				}
+			});
+					
+			let add = document.createElement("div");
+			add.setAttribute("class", "controller");
+			add.setAttribute("id", "base-view-"+type.replace(/ /g,'')+"-add");
+			add.textContent = "+";
+			add.addEventListener('click', ()=>{
+				if ( base.droids["idle"] ){
+					base.droids["idle"] -=1
+					base.droids[type] +=1 ;	
+					resourcePanel.updateViewBase("idle");
+					resourcePanel.updateViewBase(type);		
+				}
+			});
+
+			newerRow.appendChild(subtract);
+			newerRow.appendChild(add);
+
+			baseViewRight.appendChild(newerRow);
+		}
 	},
 }

@@ -1,4 +1,5 @@
 body {
+	cursor:default;
 	font-family: "Times New Roman", Times, serif;
 	font-size: 16px;
 	font-weight: normal;
@@ -42,6 +43,15 @@ h1 {
 	width:740px;
 	height:530px;
 	margin:5px;
+}
+
+.view-left{
+	float: left;
+}
+
+.view-right{
+	float: left;
+	margin-left:50px;
 }
 
 /* SLIDE MENU */
@@ -113,6 +123,14 @@ h1 {
 	cursor:default;
 }
 
+.controller{
+	cursor:default;
+	float:left;
+	text-align: center;
+	width: 15px;
+	height:15px;
+}
+
 /* PANELS */
 
 #resourcePanel{
@@ -143,8 +161,8 @@ div#explorer-monitor:before, div#planet-monitor:before, div#planet-monitor-explo
 
 /* RESOURCE AND BASE MONITORS */
 #resource-monitor, #base-monitor {
+	float: left;
 	margin-top:15px;
-	position: relative;
 	border: 1px solid black;
 	cursor: default;
 	padding: 5px 10px;
@@ -181,13 +199,20 @@ div#explorer-monitor:before, div#planet-monitor:before, div#planet-monitor-explo
 	visibility: visible;
 }
 
-div.rowKey {
-  clear: both;
-  float: left;
+/* ROWS */
+
+.rowKey {
+	width:75px;
+	clear: both;
+	float: left;
 }
 
-div.rowVal {
-  float: right;
+.rowVal {
+	float: left;
+}
+
+.row{
+	margin-top:10px;
 }
 
 /* PLANET-X */
@@ -258,26 +283,6 @@ div.rowVal {
   float:left;
   width:150px;
   height:350px; 
-}
-
-.controller{
-	cursor:default;
-	margin:1px;
-	text-align: center;
-	border:1px solid black;
-	width: 15px;
-	overflow: hidden;
-	display: inline-block;
-	white-space: nowrap;
-}
-
-#explorer-view-left{
-	float: left;
-}
-
-#explorer-view-right{
-	float: left;
-	margin-left:50px;
 }
 
 /* EVENTS */
