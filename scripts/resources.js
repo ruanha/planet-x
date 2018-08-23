@@ -100,7 +100,6 @@ let resources = {
 	energy:0,
 	metals:0,
 	rare:0,
-	uran:0,
 
 	subtract: function(shoppingList){
 		for ( let item in shoppingList ){

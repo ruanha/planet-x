@@ -3,8 +3,6 @@ let offBase = {
 
 	M:{pos:{}, name:"metals", droids:0, underAtack:false, underAttackTimer: false},
 	R:{pos:{}, name:"rare", droids:0, underAtack:false, underAttackTimer: false},
-	U:{pos:{}, name:"uran", droids:0, underAtack:false, underAttackTimer: false},
-
 	
 	output: function(){
 		for ( let i=0; i<offBase.operations.length; i++){

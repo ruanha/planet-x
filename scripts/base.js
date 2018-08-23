@@ -14,8 +14,6 @@ let base = {
 		//BASE EXTRACTOR
 		if ( base.droids.extractor ) {
 			for ( let i=0; i<base.droids.extractor; i++ ){
-				//let resourceList = ["metals", "metals", "metals", "metals", "metals", "metals", "metals", "metals", "uran", "rare"];
-				//let randomResource = resourceList[ Math.floor( Math.random()*resourceList.length ) ];
 				resources.metals += 1;
 				resourcePanel.updateViewResource("metals");
 			}

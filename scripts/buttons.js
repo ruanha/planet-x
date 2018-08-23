@@ -167,7 +167,7 @@ let buttons = {
 				utils.cooldown(buttons.cooldowns.activateExtractor, activateExtractor, activateExtractor.textContent, function(){
 					base.extractorActive = true;
 					activateExtractor.textContent = "activate extractor";
-					resourcePanel.addResource(["metals", "rare", "uran"]);
+					resourcePanel.addResource(["metals", "rare"]);
 					buttons.extract();
 					buttons.droidFactory();
 				});
