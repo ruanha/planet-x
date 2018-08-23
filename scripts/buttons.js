@@ -272,11 +272,15 @@ let buttons = {
 		let onClick = ()=>{
 			if ( explorerBtn.className == "tooltip button"){
 				if ( utils.canBuy(cost) ){
-					explorerBtn.setAttribute("class", "button disabled");
+					explorerBtn.setAttribute("class", "tooltip button disabled");
 					resources.subtract(cost);
-					let tooltip = document.getElementById("explorer-button-tooltip");
-					tooltip.parentNode.removeChild(tooltip);
-					buttons.deployBtn();
+					//let tooltip = document.getElementById("explorer-button-tooltip");
+					//tooltip.parentNode.removeChild(tooltip);
+					utils.cooldown(1000, explorerBtn, "explorer", function(){
+						explorer.initPanel();
+						explorer.updateMonitor();
+						buttons.deployBtn();
+					})
 
 					if ( !document.getElementById("planetMenu") ){
 						buttons.slideMenu.planet();
@@ -295,7 +299,8 @@ let buttons = {
 
 	deployBtn: function(){
 		let onClick = ()=>{
-			document.getElementById("planetMenu").click();		}
+			document.getElementById("planetMenu").click();
+		}
 
 		const explorerPanel = document.getElementById("explorer-panel");
 		let deployBtn = buttons.newButton("deploy!", "deploy-button", {}, onClick)

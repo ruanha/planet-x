@@ -86,7 +86,6 @@ let views={
 		buttons.explorer();
 
 		explorer.init();
-		explorer.initPanel();
 
 		let planetView = document.createElement("div");
 		planetView.setAttribute("class", "views");

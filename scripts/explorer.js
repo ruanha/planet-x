@@ -278,7 +278,7 @@ let explorer = {
 		}
 		else if ( explorer.deployed ) {
 			map.reveal(explorer.pos.x, explorer.pos.y, "");
-			explorer.dead("ran out of energy");
+			explorer.dead(">> ran out of energy");
 			map.setExplorer(base.pos.x, base.pos.y);
 		}
 		explorer.updateMonitor();
@@ -298,7 +298,7 @@ let explorer = {
 
 	dead: function(message){
 		alert("Explorer lost!");
-		console.log(message);
+		messages.display([message]);
 		Object.assign(explorer.pos, base.pos);
 		explorer.onBoard.energy = 0;
 		explorer.onBoard.droids = 0;
