@@ -2,7 +2,7 @@
 
 let buttons = {
 	cooldowns: {restartReactor:1000*3, activateExtractor:1000*3, extract:1000*10, reactor:1000*10, droid:1000*10,
-		landBtn:1000*3},
+		landBtn:1000*3, explorer:5000},
 
 	newButton: function(text, id, costs, onClick=false, cssClass="button"){
 		const button = document.createElement("div");
@@ -274,9 +274,7 @@ let buttons = {
 				if ( utils.canBuy(cost) ){
 					explorerBtn.setAttribute("class", "tooltip button disabled");
 					resources.subtract(cost);
-					//let tooltip = document.getElementById("explorer-button-tooltip");
-					//tooltip.parentNode.removeChild(tooltip);
-					utils.cooldown(1000, explorerBtn, "explorer", function(){
+					utils.cooldown(buttons.cooldowns.explorer, explorerBtn, "explorer", function(){
 						explorer.initPanel();
 						explorer.updateMonitor();
 						buttons.deployBtn();

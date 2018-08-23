@@ -4,7 +4,7 @@ let game = {
 	on: false,
 	round: 0,
 	//development: (location.hostname == "localhost")? true:false,
-	development:false,
+	development:true,
 
 	pause: function(){
 		game.on = false;
@@ -19,8 +19,6 @@ let game = {
 	init: function(){
 		views.init(); //set initial divs
 		messages.display([">> Starship has entered orbit", ">> Get ready..."], buttons.landBtn.bind(buttons));
-		//buttons.landBtn();
-		//buttons.slideMenu.controlRoom():
 	},
 
 	loop: function(){
@@ -34,11 +32,15 @@ let game = {
 	},
 }
 
+if ( game.development ){
+	console.log("development...")
+	buttons.cooldowns = {restartReactor:0, activateExtractor:0, extract:0, reactor:0, droid:0, landBtn:0, explorer:0},
+	messages.delay = [0, 0, 0];
+}
+
 game.init();
 
 if ( game.development ){
-	buttons.cooldowns = {restartReactor:0, activateExtractor:0, extract:0, reactor:0, droid:0};
-	messages.delay = [0, 0, 0];
 	setTimeout(function(){
 		document.getElementById("landBtn").click();
 		setTimeout(function(){
