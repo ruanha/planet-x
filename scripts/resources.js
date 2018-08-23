@@ -10,6 +10,37 @@ let resourcePanel = {
 	updateViewBase: function(resource){
 		let res = document.getElementById(resource+"-quant");
 		res.textContent = base.droids[resource];
+
+		if ( resource in base.droids ){
+			console.log(resource)
+			let name = document.getElementById(resource+"-name");
+			name.setAttribute("class", "tooltip")
+
+			let tooltipText = document.createElement("div");
+			tooltipText.setAttribute("class", "tooltiptext");
+			tooltipText.setAttribute("id", resource+"-droid-tooltip");
+
+			let quickRow = (rowLeftContent, rowRightContent, tooltipText)=>{
+				let rowLeft = document.createElement("div");
+				rowLeft.setAttribute("class", "rowKey");
+
+				let rowRight = document.createElement("div");
+				rowRight.setAttribute("class", "rowVal");
+
+				rowLeft.textContent = rowLeftContent;
+				rowRight.textContent = rowRightContent;
+				tooltipText.appendChild(rowLeft);
+				tooltipText.appendChild(rowRight);
+			}
+
+			if ( resource == "reactor" ){
+				quickRow(base.droids.reactor+" droid(s) produce:", base.droids.reactor*base.cores+"/10s", tooltipText);
+				name.appendChild(tooltipText);
+			}
+			else if ( resource == "extractor" ){
+
+			}
+		}
 	},	
 
 	addResource: function(list){
@@ -92,7 +123,6 @@ let resourcePanel = {
 		}
 
 		baseMonitorTable.appendChild(newRow);
-
 	},
 }
 
