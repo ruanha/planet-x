@@ -43,7 +43,7 @@ let fight = {
 		clearInterval(fight.enemy.interval);
 		fight.enemy.victorious();
 		event.closePanel();
-		explorer.dead();
+		explorer.dead("explorer destroyed by aliens!");
 	},
 
 	initPlayer: function(){

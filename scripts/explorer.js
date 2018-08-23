@@ -268,8 +268,6 @@ let explorer = {
 		    	}
 		    }
 		    else if ( tile.symbol == '\u00A0' ){
-		    	explorer.currentMove += 1;
-		    	explorer.onBoard.energy -= 1;
 		    	explorer.makeMove(newPos);
 		    }
 		    
@@ -306,6 +304,7 @@ let explorer = {
 		deployBtn.parentNode.removeChild(deployBtn);
 		document.getElementById("explorer-button").setAttribute("class", "tooltip button");
 		document.getElementById("explorer-monitor").parentNode.removeChild(document.getElementById("explorer-monitor"));
+		document.getElementById("explorerMenu").click();
 	},
 
 	updateView: function(){
