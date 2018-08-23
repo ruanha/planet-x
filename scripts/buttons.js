@@ -147,8 +147,6 @@ let buttons = {
 					let baseView = document.getElementById("baseView");
 					buttons.reactor();
 					resourcePanel.addResource(["energy"]);
-					resourcePanel.addBaseHeader("Activated")
-					resourcePanel.addBase("cores");
 					base.cores = 1;
 					resourcePanel.updateViewBase("cores");
 					document.getElementById("resourcePanel").style.visibility = "visible";
