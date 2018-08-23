@@ -226,7 +226,7 @@ let buttons = {
 					buttons.slideMenu.explorer();
 				}
 				else{
-					messages.display(["Not enough resources"]);
+					messages.display([">> not enough resources"]);
 				}
 			}
 		};
@@ -257,7 +257,7 @@ let buttons = {
 				})
 			}
 			else{
-				messages.display(["not enough resources"]);
+				messages.display([">> not enough resources"]);
 			}
 			
 		}
@@ -287,7 +287,7 @@ let buttons = {
 
 				}
 				else{
-					messages.display(["not enough resources"]);
+					messages.display([">> not enough resources"]);
 				}			
 			}
 		}
@@ -335,7 +335,9 @@ let buttons = {
 						explorer.battery = 1000;
 					});						
 				}
-
+			}
+			else if ( upgBatteryBtn.className == "tooltip button" ){
+				messages.display([">> not enough resources"])
 			}
 		}
 
@@ -352,6 +354,9 @@ let buttons = {
 				explorer.plasma = 5;
 				upgPlasmaBtn.setAttribute("class", "tooltip button disabled");
 			}
+			else if ( upgPlasmaBtn.className == "tooltip button" ){
+				messages.display([">> not enough resources"])
+			}
 		}
 		let upgPlasmaBtn = buttons.newButton("upgrade plasma weapon", "upgrade-plasma-button", cost, onClick);
 		const explorerPanel = document.getElementById("explorer-panel");
@@ -365,6 +370,9 @@ let buttons = {
 				resources.subtract(cost);
 				explorer.slowdown = "slow";
 				upgSlowBombBtn.setAttribute("class", "tooltip button disabled");
+			}
+			else if ( upgSlowBombBtn.className == "tooltip button" ){
+				messages.display([">> not enough resources"])
 			}
 		}
 		let upgSlowBombBtn = buttons.newButton("upgrade slowdown", "upgrade-slowdown-button", cost, onClick);
@@ -394,6 +402,9 @@ let buttons = {
 					});						
 				}
 			}
+			else if ( upgShieldBtn.className == "tooltip button" ){
+				messages.display([">> not enough resources"])
+			}
 		}
 
 		let upgShieldBtn = buttons.newButton("upgrade shield", "upgrade-shield-button", cost, onClick);
@@ -404,12 +415,16 @@ let buttons = {
 	upgAmphibious: function(){
 		let cost = {metals:20, rare:10}
 		let onClick = ()=>{
-			if ( upgAmphibiousBtn.className == "tooltip button" && utils.canBuy(cost) ){
-				resources.subtract(cost);
-				upgAmphibiousBtn.setAttribute("class", "tooltip button disabled");
-				explorer.amphibious = true;
+			if ( upgAmphibiousBtn.className == "tooltip button" ){
+				if (  utils.canBuy(cost) ){
+					resources.subtract(cost);
+					upgAmphibiousBtn.setAttribute("class", "tooltip button disabled");
+					explorer.amphibious = true;
+				}
+				else{
+					messages.display([">> not enough resources"])
+				}
 			}
-
 		}
 
 		let upgAmphibiousBtn = buttons.newButton("amphibious", "upgrade-amphibious-button", cost, onClick);
@@ -420,12 +435,16 @@ let buttons = {
 	upgSatellite: function(){
 		let cost = {metals:20, rare:10}
 		let onClick = ()=>{
-			if ( upgSatelliteBtn.className == "tooltip button" && utils.canBuy(cost) ){
-				upgSatelliteBtn.setAttribute("class", "tooltip button disabled");
-				resources.subtract(cost);
-				map.revealMap();
+			if ( upgSatelliteBtn.className == "tooltip button"){
+				if ( utils.canBuy(cost) ){
+					upgSatelliteBtn.setAttribute("class", "tooltip button disabled");
+					resources.subtract(cost);
+					map.revealMap();
+				}
+				else {
+					messages.display([">> not enough resources"])
+				}
 			}
-
 		}
 
 		let upgSatelliteBtn = buttons.newButton("satellite", "upgrade-satellite-button", cost, onClick);
