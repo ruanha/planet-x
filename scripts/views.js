@@ -77,16 +77,28 @@ let views={
 		baseView.textContent = "Work:"
 		view.appendChild(baseView);
 
+		// EXPLORER VIEW
 		let explorerView = document.createElement("div");
 		explorerView.setAttribute("class", "views");
 		explorerView.setAttribute("id", "explorerView");
-		explorerView.textContent = "Build:";
+		
+
+		let explorerViewLeft = document.createElement("div");
+		explorerViewLeft.setAttribute("id", "explorer-view-left");
+		explorerViewLeft.textContent = "Build:";
+
+		let explorerViewRight = document.createElement("div");
+		explorerViewRight.setAttribute("id", "explorer-view-right");
+		explorerViewRight.textContent = "Upgrade:";
+
+		explorerView.appendChild(explorerViewLeft)
+		explorerView.appendChild(explorerViewRight)
+
 		view.appendChild(explorerView);
-
 		buttons.explorer();
-
 		explorer.init();
 
+		// PLANET VIEW
 		let planetView = document.createElement("div");
 		planetView.setAttribute("class", "views");
 		planetView.setAttribute("id", "planetView");

@@ -292,8 +292,8 @@ let buttons = {
 			}
 		}
 		let explorerBtn = buttons.newButton("explorer", "explorer-button", cost, onClick)
-		const explorerView = document.getElementById("explorerView");
-		explorerView.appendChild(explorerBtn);
+		const explorerViewLeft = document.getElementById("explorer-view-left");
+		explorerViewLeft.appendChild(explorerBtn);
 	},
 
 	deployBtn: function(){
@@ -301,9 +301,9 @@ let buttons = {
 			document.getElementById("planetMenu").click();
 		}
 
-		const explorerPanel = document.getElementById("explorer-panel");
+		const explorerViewLeft = document.getElementById("explorer-view-left");
 		let deployBtn = buttons.newButton("deploy!", "deploy-button", {}, onClick)
-		explorerPanel.appendChild(deployBtn);
+		explorerViewLeft.appendChild(deployBtn);
 	},
 
 	upgBatteryBtn: function(){
@@ -342,8 +342,8 @@ let buttons = {
 		}
 
 		let upgBatteryBtn = buttons.newButton("upgrade battery", "upgrade-battery-button", cost, onClick);
-		const explorerPanel = document.getElementById("explorer-panel");
-		explorerPanel.appendChild(upgBatteryBtn);
+		const explorerViewRight = document.getElementById("explorer-view-right");
+		explorerViewRight.appendChild(upgBatteryBtn);
 	},
 
 	upgPlasmaBtn: function(){
@@ -359,8 +359,8 @@ let buttons = {
 			}
 		}
 		let upgPlasmaBtn = buttons.newButton("upgrade plasma weapon", "upgrade-plasma-button", cost, onClick);
-		const explorerPanel = document.getElementById("explorer-panel");
-		explorerPanel.appendChild(upgPlasmaBtn);
+		const explorerViewRight = document.getElementById("explorer-view-right");
+		explorerViewRight.appendChild(upgPlasmaBtn);
 	},
 
 	upgSlowBomb: function(){
@@ -376,8 +376,8 @@ let buttons = {
 			}
 		}
 		let upgSlowBombBtn = buttons.newButton("upgrade slowdown", "upgrade-slowdown-button", cost, onClick);
-		const explorerPanel = document.getElementById("explorer-panel");
-		explorerPanel.appendChild(upgSlowBombBtn);
+		const explorerViewRight = document.getElementById("explorer-view-right");
+		explorerViewRight.appendChild(upgSlowBombBtn);
 	},
 
 	upgShieldBtn: function(){
@@ -408,8 +408,8 @@ let buttons = {
 		}
 
 		let upgShieldBtn = buttons.newButton("upgrade shield", "upgrade-shield-button", cost, onClick);
-		const explorerPanel = document.getElementById("explorer-panel");
-		explorerPanel.appendChild(upgShieldBtn);
+		const explorerViewRight = document.getElementById("explorer-view-right");
+		explorerViewRight.appendChild(upgShieldBtn);
 	},
 
 	upgAmphibious: function(){
@@ -428,8 +428,8 @@ let buttons = {
 		}
 
 		let upgAmphibiousBtn = buttons.newButton("amphibious", "upgrade-amphibious-button", cost, onClick);
-		const explorerPanel = document.getElementById("explorer-panel");
-		explorerPanel.appendChild(upgAmphibiousBtn);
+		const explorerViewRight = document.getElementById("explorer-view-right");
+		explorerViewRight.appendChild(upgAmphibiousBtn);
 	},
 
 	upgSatellite: function(){
@@ -448,8 +448,8 @@ let buttons = {
 		}
 
 		let upgSatelliteBtn = buttons.newButton("satellite", "upgrade-satellite-button", cost, onClick);
-		const explorerPanel = document.getElementById("explorer-panel");
-		explorerPanel.appendChild(upgSatelliteBtn);	
+		const explorerViewRight = document.getElementById("explorer-view-right");
+		explorerViewRight.appendChild(upgSatelliteBtn);	
 	},
 
 	addDroids: function(type, includeController=false){

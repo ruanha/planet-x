@@ -30,15 +30,16 @@ let explorer = {
 	 shieldI:5000, shieldII:10000, shieldIII:20000 },
 
 	init: function(){
+		/*
 		const explorerView = document.getElementById("explorerView");
 		const explorerPanel = document.createElement("div");
 		explorerPanel.setAttribute("id", "explorer-panel");
 		explorerView.appendChild(explorerPanel);
+		*/
 	},
 
 	initPanel: function(){
-		explorer.onBoard.energy = 0;
-		explorer.onBoard.droids = 0;
+		/*
 		const explorerPanel = document.getElementById("explorer-panel");
 		const explorerMonitor = document.createElement("div");
 
@@ -49,7 +50,12 @@ let explorer = {
 		explorerMonitorTable.setAttribute("id", "explorer-monitor-table");
 
 		explorerMonitor.appendChild(explorerMonitorTable);
-		explorerPanel.appendChild(explorerMonitor);
+		explorerPanel.appendChild(explorerMonitor);*/
+
+		const explorerViewLeft = document.getElementById("explorer-view-left")
+		const explorerMonitorTable = document.createElement("table");
+		explorerMonitorTable.setAttribute("id", "explorer-monitor-table");
+		explorerViewLeft.appendChild(explorerMonitorTable);
 
 		buttons.addEnergy();
 		buttons.addDroids();
@@ -98,11 +104,13 @@ let explorer = {
 	upgrade: function(){
 		switch (explorer.techLevel){
 			case 1:
+			messages.display([">> retrieved lost tech", ">> can now upgrade explorer"]);
 			buttons.upgBatteryBtn();
 			buttons.upgShieldBtn();
 			break;
 
 			case 2:
+			messages.display([">> retrieved lost tech", ">> can now upgrade explorer"]);
 			upgShieldBtn = document.getElementById("upgrade-shield-button");
 			upgShieldBtn.setAttribute("class", "tooltip button");
 			upgBatteryBtn = document.getElementById("upgrade-battery-button");
@@ -111,6 +119,7 @@ let explorer = {
 			break;
 
 			case 3:
+			messages.display([">> retrieved lost tech", ">> can now upgrade explorer"]);
 			upgShieldBtn = document.getElementById("upgrade-shield-button");
 			upgShieldBtn.setAttribute("class", "tooltip button");
 			upgBatteryBtn = document.getElementById("upgrade-battery-button");
@@ -120,12 +129,14 @@ let explorer = {
 
 			case 4:
 			//Amphibous, ultimate battery
+			messages.display([">> retrieved lost tech", ">> can now upgrade explorer"]);
 			upgBatteryBtn = document.getElementById("upgrade-battery-button");
 			upgBatteryBtn.setAttribute("class", "tooltip button");
 			buttons.upgSlowBomb();
 			break;
 
 			case 5:
+			messages.display([">> retrieved lost tech", ">> can now build satellite"]);
 			//final solution, satelite
 			buttons.upgSatellite();
 			break;

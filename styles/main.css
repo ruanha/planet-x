@@ -261,6 +261,15 @@ div.rowVal {
   white-space: nowrap;
 }
 
+#explorer-view-left{
+	float: left;
+}
+
+#explorer-view-right{
+	float: left;
+	margin-left:50px;
+}
+
 /* EVENTS */
 
 .event{

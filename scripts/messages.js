@@ -5,9 +5,9 @@ let messages={
 	delay: [100, 75, 50],
 	writesMessage: false,
 	onScreen: [],
-	maxMessages:5,
+	maxMessages:10,
 
-	display: function(messageArray, _callback) {
+	display: function(messageArray, _callback=()=>{}) {
 		this.writesMessage = true;
 		let message = messageArray.shift();
 		let delay = this.delay[this.level];
