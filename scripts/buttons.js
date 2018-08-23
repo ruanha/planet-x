@@ -1,8 +1,8 @@
 "use strict";
 
 let buttons = {
-	cooldowns: {restartReactor:1000*3, activateExtractor:1000*3, extract:1000*10, reactor:1000*10, droid:1000*10,
-		landBtn:1000*3, explorer:5000},
+	cooldowns: {restartReactor:1000*5, activateExtractor:1000*5, extract:1000*10, reactor:1000*10, droid:1000*10,
+		landBtn:1000*10, explorer:1000*10+1000*10*explorer.techLevel},
 
 	newButton: function(text, id, costs, onClick=false, cssClass="button"){
 		const button = document.createElement("div");
