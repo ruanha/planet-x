@@ -118,6 +118,7 @@ let buttons = {
 
 	landBtn: function(){
 		let onClick = ()=>{
+			landBtn.setAttribute("class", "button disabled")
 			utils.cooldown(buttons.cooldowns.landBtn, landBtn, landBtn.textContent, function(){
 				landBtn.parentNode.removeChild(landBtn);
 				buttons.restartReactor();

@@ -3,8 +3,7 @@
 let game = {
 	on: false,
 	round: 0,
-	//development: (location.hostname == "localhost")? true:false,
-	development:true,
+	development: (location.hostname == "localhost")? true:false,
 
 	pause: function(){
 		game.on = false;
