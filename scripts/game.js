@@ -29,12 +29,12 @@ let game = {
 			}
 		}, 10000);
 	},
-}
+};
 
 if ( game.development ){
 	if (confirm("use dev mode?")){
-		console.log("development...")
-		buttons.cooldowns = {restartReactor:0, activateExtractor:0, extract:0, reactor:0, droid:0, landBtn:0, explorer:0},
+		console.log("development...");
+		buttons.cooldowns = {restartReactor:0, activateExtractor:0, extract:0, reactor:0, droid:0, landBtn:0, explorer:0};
 		messages.delay = [0, 0, 0];
 	}
 	else{
@@ -52,22 +52,22 @@ if ( game.development ){
 			setTimeout(function(){
 				document.getElementById("activate-extractor-button").click();
 				resources.energy = 1000;
-				resourcePanel.updateViewResource("energy")
+				resourcePanel.updateViewResource("energy");
 				resources.metals = 1000;
-				resourcePanel.updateViewResource("metals")
-				document.getElementById("droid-factory-button").click()
+				resourcePanel.updateViewResource("metals");
+				document.getElementById("droid-factory-button").click();
 				base.droids.idle = 10;
-				resourcePanel.updateViewBase("idle")
-				document.getElementById("explorer-button").click()
+				resourcePanel.updateViewBase("idle");
+				document.getElementById("explorer-button").click();
 				explorer.onBoard.energy = 1000;
 				explorer.onBoard.droids = 1;
 				explorer.maxHealth = 100;
 				explorer.health = 100;
 				explorer.weapon = 10;
-				document.getElementById("deploy-button").click()
-			}, 100)
-		}, 100)
-	}, 500)
+				document.getElementById("deploy-button").click();
+			}, 100);
+		}, 100);
+	}, 500);
 }
 
 

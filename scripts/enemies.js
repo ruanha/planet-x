@@ -1,3 +1,5 @@
+"use strict";
+
 let enemies = {
 	submarineBeast: function(){
 		return new this.EnemyFactory(this.submarineBeastObj);
@@ -57,10 +59,10 @@ let enemies = {
 		},
 
 		defeated: function(){
-			console.log("enemy dead")
+			console.log("enemy dead");
 		},
 		victorious: function(){
-			console.log("player dead")
+			console.log("player dead");
 		},
 	},
 
@@ -79,10 +81,10 @@ let enemies = {
 		},
 
 		defeated: function(){
-			console.log("enemy dead")
+			console.log("enemy dead");
 		},
 		victorious: function(){
-			console.log("player dead")
+			console.log("player dead");
 		},		
 	},
 
@@ -101,10 +103,10 @@ let enemies = {
 		},
 
 		defeated: function(){
-			console.log("enemy dead")
+			console.log("enemy dead");
 		},
 		victorious: function(){
-			console.log("player dead")
+			console.log("player dead");
 		},		
 	},
 
@@ -120,7 +122,7 @@ let enemies = {
 		loot:{metals:7, energy:10},
 
 		playerArrives: function(){
-			clearTimeout(baseObj);
+			//clearTimeout(baseObj);
 		},
 
 		defeated: function(){
@@ -129,8 +131,8 @@ let enemies = {
 			clearTimeout(offBaseObj.underAttackTimer);
 		},
 		victorious: function(){
-			let offBaseObj = getOffbaseAtPos(explorer.pos.x, explorer.pos.y);
-			AI.delayMessage(["Mine lost..."]);
+			let offBaseObj = offBase.getOffbaseAtPos(explorer.pos.x, explorer.pos.y);
+			messages.delayMessage(["Mine lost..."]);
 			offBaseObj.underAttack = false;
 			offBaseObj.droids = 0;
 			offBase.removeBase(offBaseObj);
@@ -154,7 +156,7 @@ let enemies = {
 		},
 
 		defeated: function(){
-			tile = map.getTile(explorer.pos.x, explorer.pos.y);
+			let tile = map.getTile(explorer.pos.x, explorer.pos.y);
 			tile.symbol = "X";
 			tile.event = "destroyed hive";
 		},	
@@ -184,9 +186,11 @@ let enemies = {
 		victorious: function(){
 			console.log("Base bombarded, droids lost");
 			for ( let key in base.droids ){
-				base.droids[key] = Math.floor(base.droids[key]/2);
+				if ( base.droids.hasOwnProperty(key) ){
+					base.droids[key] = Math.floor(base.droids[key]/2);
+				}
 			}
 			base.underAttack = false;
 		},
 	},
-}
+};

@@ -1,5 +1,7 @@
 "use strict";
 
+
+
 let messages={
 	level: 0,
 	delay: [100, 75, 50],
@@ -29,13 +31,13 @@ let messages={
 	    		}
 	    		else if ( message !== undefined ){
 	    			messages.display(messageArray, _callback.bind(buttons));
-	    		};
-	    	};
+	    		}
+	    	}
 	    	f();
 		}
 		else {
 			this.writesMessage = false;
 			_callback();
-		};
+		}
 	},
-}
+};

@@ -64,7 +64,7 @@ let views={
 		let controlRoomView = document.createElement("div");
 		controlRoomView.setAttribute("class", "views");
 		controlRoomView.setAttribute("id", "controlRoomView");
-		controlRoomView.textContent = "Actions:"
+		controlRoomView.textContent = "Actions:";
 		view.appendChild(controlRoomView);
 
 		// BASE VIEW
@@ -85,8 +85,8 @@ let views={
 		baseViewRight.setAttribute("class", "view-right");
 		baseViewRight.textContent = "Droids:";
 		
-		baseView.appendChild(baseViewLeft)
-		baseView.appendChild(baseViewRight)
+		baseView.appendChild(baseViewLeft);
+		baseView.appendChild(baseViewRight);
 
 		view.appendChild(baseView);
 
@@ -106,8 +106,8 @@ let views={
 		explorerViewRight.setAttribute("class", "view-right");
 		explorerViewRight.textContent = "Upgrade:";
 
-		explorerView.appendChild(explorerViewLeft)
-		explorerView.appendChild(explorerViewRight)
+		explorerView.appendChild(explorerViewLeft);
+		explorerView.appendChild(explorerViewRight);
 
 		view.appendChild(explorerView);
 		buttons.explorer();

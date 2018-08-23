@@ -1,3 +1,5 @@
+"use strict";
+
 let explorer = {
 	techLevel: 0,
 	symbol: "@",
@@ -31,7 +33,7 @@ let explorer = {
 
 
 	initPanel: function(){
-		const explorerViewLeft = document.getElementById("explorer-view-left")
+		const explorerViewLeft = document.getElementById("explorer-view-left");
 		const explorerMonitorTable = document.createElement("table");
 		explorerMonitorTable.setAttribute("id", "explorer-monitor-table");
 		explorerViewLeft.appendChild(explorerMonitorTable);
@@ -44,34 +46,38 @@ let explorer = {
 		// this is the monitor on the planet-x view
 		const explorerMonitor = document.getElementById("planet-monitor-explorer");
 		while (explorerMonitor.firstChild){
-			explorerMonitor.removeChild(explorerMonitor.firstChild)
+			explorerMonitor.removeChild(explorerMonitor.firstChild);
 		}
 		//update onboard items
-		for ( key in explorer.onBoard ){
-			let div = document.createElement("div");
-			div.setAttribute("id", "onboard-"+key);
-			div.setAttribute("class", "onboard");
-			div.textContent = key+":"+explorer.onBoard[key];
-			explorerMonitor.appendChild(div)
+		for ( let key in explorer.onBoard ){
+      if ( explorer.onBoard.hasOwnProperty(key) ){
+        let div = document.createElement("div");
+        div.setAttribute("id", "onboard-"+key);
+        div.setAttribute("class", "onboard");
+        div.textContent = key+":"+explorer.onBoard[key];
+        explorerMonitor.appendChild(div);
+      }
 		}
 		//update cargo items (metals and other resources)
-		for ( key in explorer.cargo ){
-			let div = document.createElement("div");
-			div.setAttribute("id", "onboard-"+key);
-			div.setAttribute("class", "onboard");
-			div.textContent = key+":"+explorer.cargo[key];
-			explorerMonitor.appendChild(div)
+		for ( let key in explorer.cargo ){
+      if ( explorer.cargo.hasOwnProperty(key) ){
+        let div = document.createElement("div");
+        div.setAttribute("id", "onboard-"+key);
+        div.setAttribute("class", "onboard");
+        div.textContent = key+":"+explorer.cargo[key];
+        explorerMonitor.appendChild(div);
+      }
 		}		
-		hitPointCounter = document.createElement("div");
+		let hitPointCounter = document.createElement("div");
 		hitPointCounter.setAttribute("id", "hit-point-counter");
 		hitPointCounter.textContent = "hp: "+explorer.health+"/"+explorer.maxHealth;
 
-		cargoSpace = document.createElement("div");
+		let cargoSpace = document.createElement("div");
 		cargoSpace.setAttribute("id", "cargo-space");
 		cargoSpace.textContent = "cargo: "+explorer.cargoWeight+"/"+explorer.maxCargo;
 
-		explorerMonitor.appendChild(hitPointCounter)
-		explorerMonitor.appendChild(cargoSpace)
+		explorerMonitor.appendChild(hitPointCounter);
+		explorerMonitor.appendChild(cargoSpace);
 
 	},
 
@@ -88,21 +94,22 @@ let explorer = {
 			break;
 			case 1:
 			messages.display([">> retrieved lost tech", ">> can now upgrade explorer"]);
-			break;
 			buttons.upgPlasmaBtn();
+      break;
+			
 			case 2:
 			messages.display([">> retrieved lost tech", ">> can now upgrade explorer"]);
-			upgShieldBtn = document.getElementById("upgrade-shield-button");
+			let upgShieldBtn = document.getElementById("upgrade-shield-button");
 			upgShieldBtn.setAttribute("class", "tooltip button");
-			upgBatteryBtn = document.getElementById("upgrade-battery-button");
+			let upgBatteryBtn = document.getElementById("upgrade-battery-button");
 			upgBatteryBtn.setAttribute("class", "tooltip button");
 			break;
 
 			case 3:
 			messages.display([">> retrieved lost tech", ">> can now upgrade explorer"]);
-			upgShieldBtn = document.getElementById("upgrade-shield-button");
+			let upgShieldBtn = document.getElementById("upgrade-shield-button");
 			upgShieldBtn.setAttribute("class", "tooltip button");
-			upgBatteryBtn = document.getElementById("upgrade-battery-button");
+			let upgBatteryBtn = document.getElementById("upgrade-battery-button");
 			upgBatteryBtn.setAttribute("class", "tooltip button");
 			buttons.upgAmphibious();
 			break;
@@ -110,7 +117,7 @@ let explorer = {
 			case 4:
 			//Amphibous, ultimate battery
 			messages.display([">> retrieved lost tech", ">> can now upgrade explorer"]);
-			upgBatteryBtn = document.getElementById("upgrade-battery-button");
+			let upgBatteryBtn = document.getElementById("upgrade-battery-button");
 			upgBatteryBtn.setAttribute("class", "tooltip button");
 			buttons.upgSlowBomb();
 			break;
@@ -151,8 +158,8 @@ let explorer = {
 	},
 
 	setDistance: function(){
-		explorer.distanceFromBase = Math.abs(explorer.pos.x-base.pos.x) 
-			+ Math.abs(explorer.pos.y-base.pos.y);
+		explorer.distanceFromBase = Math.abs(explorer.pos.x-base.pos.x) + 
+      Math.abs(explorer.pos.y-base.pos.y);
 	},
 
 	move: function(e) {
@@ -177,7 +184,7 @@ let explorer = {
 		    	newPos.x = map.validX(newPos.x+1);
 		    }
 
-		    tile = map.getTile(newPos.x, newPos.y);
+		    let tile = map.getTile(newPos.x, newPos.y);
 		    // TILE == BASE
 		    if ( newPos.x == base.pos.x && newPos.y == base.pos.y ){
 		    	map.setExplorer(explorer.pos.x, explorer.pos.y, false);
@@ -190,13 +197,15 @@ let explorer = {
 			    	explorer.shield = explorer.maxShield;
 
 			    	for ( let key in explorer.cargo ){
-			    		resources[key] = (resources[key])? resources[key]+explorer.cargo[key]:explorer.cargo[key];
-			    		resourcePanel.updateViewResource(key)
+              if ( explorer.cargo.hasOwnProperty(key) ){
+                resources[key] = (resources[key])? resources[key]+explorer.cargo[key]:explorer.cargo[key];
+                resourcePanel.updateViewResource(key);
+              }
 			    	}
 			    	explorer.cargo = {};
 			    	explorer.cargoWeight = 0;
 
-			    	document.getElementById("explorerMenu").click()
+			    	document.getElementById("explorerMenu").click();
 		    	}
 		    	else{
 		    		fight.manager("baseAttackBeast");
@@ -207,7 +216,7 @@ let explorer = {
 		    	if ( !offBase.baseExist(newPos.x, newPos.y ) ){
 		    		explorer.makeMove(newPos);
 		    		offBase.addOffbase(tile.symbol, newPos.x, newPos.y );
-		    		event.resource(tile.symbol, newPos.x, newPos.y);    		
+		    		events.resource(tile.symbol, newPos.x, newPos.y);    		
 		    	}
 		    	else if ( offBase.underAttack( newPos.x, newPos.y ) ){
 		    		explorer.makeMove(newPos);
@@ -215,7 +224,7 @@ let explorer = {
 		    	}
 		    	else{
 		    		explorer.makeMove(newPos);
-		    		event.resource(tile.symbol, newPos.x, newPos.y);
+		    		events.resource(tile.symbol, newPos.x, newPos.y);
 		    	}
 
 		    }
@@ -230,8 +239,8 @@ let explorer = {
 		    	console.log("The ruins of a destroyed hive");
 		    }
 		    // RANDOM ENEMY
-		    else if ( explorer.distanceFromBase > 2  && Math.random() > 0.95 
-		    	&& tile.symbol == '\u00A0' ) {
+		    else if ( explorer.distanceFromBase > 2  && Math.random() > 0.95 && 
+                 tile.symbol == '\u00A0' ) {
 		    	if ( explorer.distanceFromBase < 15 ){
 		    		fight.manager("submarineBeast");
 		    	}
@@ -255,7 +264,7 @@ let explorer = {
 			    	explorer.makeMove(newPos);
 		    	}
 		    	else {
-		    		messages.display([">> needs amphibious upgrade"])
+		    		messages.display([">> needs amphibious upgrade"]);
 		    	}
 		    }
 		    else if ( tile.symbol == '\u00A0' ){
@@ -300,15 +309,17 @@ let explorer = {
 	},
 
 	updateView: function(){
-		for ( key in explorer.onBoard ){
-			let quantity = document.getElementById("explorer-"+key+"-quant");
-			quantity.textContent = explorer.onBoard[key];
+		for ( let key in explorer.onBoard ){
+      if (explorer.onBoard.hasOwnProperty(key) ){
+      	let quantity = document.getElementById("explorer-"+key+"-quant");
+      	quantity.textContent = explorer.onBoard[key];
+      }
 		}				
 	},
 
 	onBase: function(){
 		if ( explorer.pos.x == base.pos.x && explorer.pos.y == base.pos.y ){
-			return true
+			return true;
 		}
 		else{
 			return false;
@@ -329,4 +340,4 @@ let explorer = {
 			return "";
 		}
 	},
-}
+};

@@ -1,3 +1,7 @@
+"use strict";
+
+
+
 let offBase = {
 	operations: [], //list of active off base operations
 
@@ -6,15 +10,15 @@ let offBase = {
 	
 	output: function(){
 		for ( let i=0; i<offBase.operations.length; i++){
-			resources.add( offBase.operations[i].name, offBase.operations[i].droids )
+			resources.add( offBase.operations[i].name, offBase.operations[i].droids );
 			resourcePanel.updateViewResource(offBase.operations[i].name);
 		}
 	},
 
 	underAttack: function(posx, posy){
 		for ( let i=0; i<offBase.operations.length; i++ ){
-			if ( posx == offBase.operations[i].pos.x && posy == offBase.operations[i].pos.y 
-				&& offBase.operations[i].underAttack ){
+			if ( posx == offBase.operations[i].pos.x && posy == offBase.operations[i].pos.y && 
+				offBase.operations[i].underAttack ){
 				return offBase.operations[i];
 			}		
 		}
@@ -66,4 +70,4 @@ let offBase = {
 			}
 		}		
 	},
-}
+};

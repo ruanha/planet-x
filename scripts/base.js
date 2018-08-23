@@ -24,4 +24,4 @@ let base = {
 			resourcePanel.updateViewResource("energy");
 		}
 	},
-}
+};

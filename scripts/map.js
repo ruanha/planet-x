@@ -1,3 +1,5 @@
+"use strict";
+
 let map = {
 	objectMap: {},
 	length: undefined,
@@ -11,19 +13,19 @@ let map = {
 
 	initObjectMap: function(){
 	/* init the map of tile objects.*/
-		let map = []
+		let map = [];
 		for ( let i=0; i<this.fullMap.length; i++){
-			let lat = []
+			let lat = [];
 			for ( let j=0; j<this.fullMap[i].length; j++ ){
-				let tile = new this.tileFactory({x:i,y:j})
+				let tile = new this.tileFactory({x:i,y:j});
 				lat.push(tile);
 				if ( this.fullMap[i][j] == "H"){
 					//set Hive event
-					tile.symbol = "H"
+					tile.symbol = "H";
 					tile.tileEvent = "Hive";
 				}
 				else if ( this.fullMap[i][j] == "*" ){
-					tile.symbol = "*"
+					tile.symbol = "*";
 				}
 				else if ( this.fullMap[i][j] == " " ) {
 					tile.symbol = "\u00A0";
@@ -100,14 +102,14 @@ let map = {
 		return (new) coordinate if it exists on map (including if it should wrap
 		to new coordinates)
 		*/
-		x = pos.x;
-		y = pos.y;
+		let x = pos.x;
+		let y = pos.y;
 		if ( y > this.height || y < 0 ){
-			return false
+			return false;
 		}
 
 		if (  x > this.length ){
-			return {x:x-this.length, y:y}
+			return {x:x-this.length, y:y};
 		}
 		else if ( x < 0){
 			return {x:x+this.length, y:y};
@@ -117,25 +119,25 @@ let map = {
 
 	reveal: function(long, lat, icon){
 		map.objectMap[lat][long].visible = true;
-		for ( i=0; i<3; i++ ){
+		for ( let i=0; i<3; i++ ){
 			if ( lat+i+1<map.height-1 && lat-i-1>=0 ){
 				map.objectMap[lat+i+1][long].visible = true;
 				map.objectMap[lat-i-1][long].visible = true;
 			}
 
-			for ( j=0; j<3; j++){
-				let x = this.validX(long+j)
+			for ( let j=0; j<3; j++){
+				let x = this.validX(long+j);
 				map.objectMap[lat-i][x].visible = true;
 				map.objectMap[lat+i][x].visible = true;
 
-				x = this.validX(long-j)
+				x = this.validX(long-j);
 				map.objectMap[lat+i][x].visible = true;
 				map.objectMap[lat-i][x].visible = true;
 
-				x = this.validX(long+j+1)
+				x = this.validX(long+j+1);
 				map.objectMap[lat][x].visible = true;
 
-				x = this.validX(long-j-1)
+				x = this.validX(long-j-1);
 				map.objectMap[lat][x].visible = true;
 			}
 		}
@@ -231,4 +233,4 @@ let map = {
 	[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
 	[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']
 	],
-}
+};

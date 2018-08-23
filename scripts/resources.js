@@ -43,7 +43,7 @@ let resourcePanel = {
 		newRow.appendChild(baseThing);
 		baseMonitor.appendChild(newRow);
 	},
-}
+};
 
 let resources = {
 	energy:0,
@@ -52,13 +52,14 @@ let resources = {
 
 	subtract: function(shoppingList){
 		for ( let item in shoppingList ){
-			resources[item] -= shoppingList[item];
-			resourcePanel.updateViewResource(item);
+			if ( shoppingList.hasOwnProperty(item) ){
+				resources[item] -= shoppingList[item];
+				resourcePanel.updateViewResource(item);
+			}
 		}
 	},
 
 	add: function(resource, amount){
 		resources[resource] += amount;
 	},
-
-}
+};

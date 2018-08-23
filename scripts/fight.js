@@ -1,3 +1,5 @@
+"use strict";
+
 let fight = {
 	// fight obj is called by the event obj to arrange and complete fights.
 	// who handles the loot?
@@ -25,26 +27,26 @@ let fight = {
 
 	manager: function(typeOfEnemy){
 		this.enemy = enemies[typeOfEnemy]();
-		event.titleText=this.enemy.titleText;
-		event.message=this.enemy.messageText;
+		events.titleText=this.enemy.titleText;
+		events.message=this.enemy.messageText;
 		this.initPlayer();
 
 		game.pause();
-		event.display( buttons.battleButtons(), true, true );
+		events.display( buttons.battleButtons(), true, true );
 		fight.enemy.interval = setInterval(fight.enemyAttack.bind(fight), fight.enemy.delay);
 	},
 
 	enemyDead: function(){
 		clearInterval(fight.enemy.interval);
 		fight.enemy.defeated();
-		event.closePanel();
-		event.display( buttons.lootBtns(), false, false );
+		events.closePanel();
+		events.display( buttons.lootBtns(), false, false );
 	},
 
 	playerDead: function(){
 		clearInterval(fight.enemy.interval);
 		fight.enemy.victorious();
-		event.closePanel();
+		events.closePanel();
 		explorer.dead("explorer destroyed by aliens!");
 	},
 
@@ -54,7 +56,7 @@ let fight = {
 	},
 
 	enemyAttack: function(){
-		event.animation(fight.enemy.weaponIcon, fight.enemy.icon, 200);
+		events.animation(fight.enemy.weaponIcon, fight.enemy.icon, 200);
 		setTimeout(function(){
 			if ( explorer.shield > 0 ){
 				explorer.shield -= fight.enemy.damage;
@@ -81,7 +83,7 @@ let fight = {
 		}
 		else{
 			this.enemy.hitPoints -= damage;
-			console.log("player attack!")
+			console.log("player attack!");
 			if ( this.enemy.hitPoints <= 0 ){
 				fight.enemyDead();
 			}
@@ -90,6 +92,4 @@ let fight = {
 			}				
 		}
 	},
-}
-
-
+};

@@ -17,16 +17,18 @@ let buttons = {
 			tooltipText.setAttribute("id", id+"-tooltip");
 
 			for ( let key in costs ){
-				let rowKey = document.createElement("div");
-				rowKey.setAttribute("class", "rowKey");
-
-				let rowVal = document.createElement("div");
-				rowVal.setAttribute("class", "rowVal");
-
-				rowKey.textContent = key;
-				rowVal.textContent = costs[key];
-				tooltipText.appendChild(rowKey);
-				tooltipText.appendChild(rowVal);
+        if (costs.hasOwnProperty(key)) {
+          let rowKey = document.createElement("div");
+          rowKey.setAttribute("class", "rowKey");
+  
+          let rowVal = document.createElement("div");
+          rowVal.setAttribute("class", "rowVal");
+  
+          rowKey.textContent = key;
+          rowVal.textContent = costs[key];
+          tooltipText.appendChild(rowKey);
+          tooltipText.appendChild(rowVal);
+    		} 
 			}
 
 			button.appendChild(tooltipText);
@@ -51,7 +53,7 @@ let buttons = {
 				setTimeout(function(){
 					let resourcePanel = document.getElementById("resourcePanel");
 					resourcePanel.style.visibility='visible';
-				}, 500)	
+				}, 500);
 			}
 
 			//all the rest
@@ -67,7 +69,7 @@ let buttons = {
 		// SLIDE MENU: CONTROL ROOM
 			let controlRoomMenu = buttons.newButton("Control Room", "controlRoomMenu", {}, this.onClick, "slider active");
 			controlRoomMenu.setAttribute("slidePos", 0);
-			viewPanel = document.getElementById("viewPanel");
+			let viewPanel = document.getElementById("viewPanel");
 			viewPanel.appendChild(controlRoomMenu);
 		},
 
@@ -76,7 +78,7 @@ let buttons = {
 			let baseMenu = buttons.newButton("Base", "baseMenu", {}, this.onClick, "slider");
 			baseMenu.setAttribute("slidePos", -750);
 
-			viewPanel = document.getElementById("viewPanel");
+			let viewPanel = document.getElementById("viewPanel");
 			viewPanel.appendChild(baseMenu);
 		},
 
@@ -85,7 +87,7 @@ let buttons = {
 			let explorerMenu = buttons.newButton("Explorer", "explorerMenu", {}, this.onClick, "slider");
 			explorerMenu.setAttribute("slidePos", -1500);
 
-			viewPanel = document.getElementById("viewPanel");
+			let viewPanel = document.getElementById("viewPanel");
 			viewPanel.appendChild(explorerMenu);
 		},
 
@@ -94,7 +96,7 @@ let buttons = {
 			let planetMenu = buttons.newButton("Planet-X", "planetMenu", {}, this.onClick, "slider");
 			planetMenu.setAttribute("slidePos", -2250);
 
-			viewPanel = document.getElementById("viewPanel");
+			let viewPanel = document.getElementById("viewPanel");
 			viewPanel.appendChild(planetMenu);
 
 			//SLIDE RESOURCE PANEL OUT OF VIEW
@@ -104,7 +106,7 @@ let buttons = {
 				explorer.updateMonitor();
 				explorer.deployed = true;
 				explorer.exploring();
-			})
+			});
 
 		},
 
@@ -124,10 +126,10 @@ let buttons = {
 					landBtn.parentNode.removeChild(landBtn);
 					buttons.restartReactor();
 					game.on = true;
-					buttons.slideMenu.controlRoom()
-				})				
+					buttons.slideMenu.controlRoom();
+				});			
 			}
-		}
+		};
 
 
 		let landBtn = this.newButton("land ship!", "landBtn", {}, onClick);
@@ -137,7 +139,7 @@ let buttons = {
 	},
 
 	restartReactor: function(){
-		let cost = {}
+		let cost = {};
 		let onClick = ()=>{
 			if ( restartReactorBtn.className == "button" ) {
 				restartReactorBtn.setAttribute("class", "button disabled");
@@ -158,7 +160,7 @@ let buttons = {
 	},	
 
 	activateExtractor: function(){
-		let cost = {}
+		let cost = {};
 		let onClick = ()=>{
 			if ( activateExtractor.className == "button" ){
 				activateExtractor.setAttribute("class", "button disabled");
@@ -169,22 +171,22 @@ let buttons = {
 					buttons.extract();
 					buttons.droidFactory();
 				});
-			};
+			}
 		};
-		let activateExtractor = buttons.newButton("activate extractor", "activate-extractor-button", cost, onClick)
+		let activateExtractor = buttons.newButton("activate extractor", "activate-extractor-button", cost, onClick);
 		const actionPanel = document.getElementById("controlRoomView");
 		actionPanel.appendChild(activateExtractor);
 	},
 
 	extract: function(){
-		let cost = {}
+		let cost = {};
 		let onClick = ()=>{
-			if ( extract.className == "button" ){
-				extract.setAttribute("class", "button disabled");
-				utils.cooldown(buttons.cooldowns.extract, extract, extract.textContent, function(){
+			if ( button.className == "button" ){
+				button.setAttribute("class", "button disabled");
+				utils.cooldown(buttons.cooldowns.extract, button, button.textContent, function(){
 					resources.metals += 1;
 					resourcePanel.updateViewResource("metals");
-					extract.setAttribute("class", "button");
+					button.setAttribute("class", "button");
 				});
 			}
 		};
@@ -194,7 +196,7 @@ let buttons = {
 	},
 
 	reactor: function(){
-		let cost = {}
+		let cost = {};
 		let onClick = ()=>{
 			if ( button.className == "button" ){
 				button.setAttribute("class", "button disabled");
@@ -218,7 +220,7 @@ let buttons = {
 				if ( utils.canBuy(cost) ){
 					resources.subtract(cost);
 					droidFactoryBtn.setAttribute("class", "button disabled");
-					let tooltip = document.getElementById("droid-factory-button-tooltip")
+					let tooltip = document.getElementById("droid-factory-button-tooltip");
 					tooltip.parentNode.removeChild(tooltip);
 					buttons.droidBtn();
 					buttons.slideMenu.explorer();
@@ -229,7 +231,7 @@ let buttons = {
 			}
 		};
 
-		let droidFactoryBtn = buttons.newButton("activate droid factory", "droid-factory-button", cost, onClick)
+		let droidFactoryBtn = buttons.newButton("activate droid factory", "droid-factory-button", cost, onClick);
 
 		const actionsPanel = document.getElementById("controlRoomView");
 		actionsPanel.appendChild(droidFactoryBtn);
@@ -243,23 +245,23 @@ let buttons = {
 	},
 
 	droidBtn: function(){
-		let cost = {metals: 2, energy:1}
+		let cost = {metals: 2, energy:1};
 		let onClick = ()=>{
 			if ( utils.canBuy(cost) ){
 				droidBtn.setAttribute("class", "button disabled");
 				resources.subtract(cost);
 				utils.cooldown(buttons.cooldowns.droid, droidBtn, "droid", function(){
-					droidBtn.setAttribute("class", "tooltip button")
+					droidBtn.setAttribute("class", "tooltip button");
 					base.droids.idle += 1;
 					resourcePanel.updateViewBase("idle");
-				})
+    });
 			}
 			else{
 				messages.display([">> not enough resources"]);
 			}
 			
-		}
-		let droidBtn = buttons.newButton("droid", "droid-button", cost, onClick)
+		};
+		let droidBtn = buttons.newButton("droid", "droid-button", cost, onClick);
 		const baseViewLeft = document.getElementById("base-view-left");
 		baseViewLeft.appendChild(droidBtn);
 	},
@@ -278,14 +280,14 @@ let buttons = {
 						explorer.updateMonitor();
 						buttons.deployBtn();
 						buttons.slideMenu.planet();
-					})
+					});
 				}
 				else{
 					messages.display([">> not enough resources"]);
 				}			
 			}
-		}
-		let explorerBtn = buttons.newButton("explorer", "explorer-button", cost, onClick)
+		};
+		let explorerBtn = buttons.newButton("explorer", "explorer-button", cost, onClick);
 		const explorerViewLeft = document.getElementById("explorer-view-left");
 		explorerViewLeft.appendChild(explorerBtn);
 	},
@@ -293,47 +295,47 @@ let buttons = {
 	deployBtn: function(){
 		let onClick = ()=>{
 			document.getElementById("planetMenu").click();
-		}
+		};
 
 		const explorerViewLeft = document.getElementById("explorer-view-left");
-		let deployBtn = buttons.newButton("deploy!", "deploy-button", {}, onClick)
+		let deployBtn = buttons.newButton("deploy!", "deploy-button", {}, onClick);
 		explorerViewLeft.appendChild(deployBtn);
 	},
 
 	upgBatteryBtn: function(){
-		let cost = {metals:20, rare:10}
+		let cost = {metals:20, rare:10};
 		let onClick = ()=>{
 			if ( upgBatteryBtn.className == "tooltip button" && utils.canBuy(cost) ){
 				resources.subtract(cost);
 				if ( explorer.battery == 15 ){
 					upgBatteryBtn.setAttribute("class", "tooltip button disabled");
-					utils.cooldown(explorer.upgradeCooldowns["batteryI"], upgBatteryBtn, "upgrade battery II", function(){
+					utils.cooldown(explorer.upgradeCooldowns.batteryI, upgBatteryBtn, "upgrade battery II", function(){
 						explorer.battery += 15;
 					});
 				}
 				else if ( explorer.battery == 30 ){
 					upgBatteryBtn.setAttribute("class", "tooltip button disabled");
-					utils.cooldown(explorer.upgradeCooldowns["batteryII"], upgBatteryBtn, "upgrade battery III", function(){
+					utils.cooldown(explorer.upgradeCooldowns.batteryII, upgBatteryBtn, "upgrade battery III", function(){
 						explorer.battery += 15;
 					});
 				}
 				else if ( explorer.battery == 45 ){
 					upgBatteryBtn.setAttribute("class", "tooltip button disabled");
-					utils.cooldown(explorer.upgradeCooldowns["batteryIII"], upgBatteryBtn, "upgrade battery IV", function(){
+					utils.cooldown(explorer.upgradeCooldowns.batteryIII, upgBatteryBtn, "upgrade battery IV", function(){
 						explorer.battery += 15;
 					});					
 				}
 				else if ( explorer.battery == 60 ){
 					upgBatteryBtn.setAttribute("class", "tooltip button disabled");
-					utils.cooldown(explorer.upgradeCooldowns["batteryIV"], upgBatteryBtn, "upgrade battery IV", function(){
+					utils.cooldown(explorer.upgradeCooldowns.batteryIV, upgBatteryBtn, "upgrade battery IV", function(){
 						explorer.battery = 1000;
 					});						
 				}
 			}
 			else if ( upgBatteryBtn.className == "tooltip button" ){
-				messages.display([">> not enough resources"])
+				messages.display([">> not enough resources"]);
 			}
-		}
+		};
 
 		let upgBatteryBtn = buttons.newButton("upgrade battery", "upgrade-battery-button", cost, onClick);
 		const explorerViewRight = document.getElementById("explorer-view-right");
@@ -341,7 +343,7 @@ let buttons = {
 	},
 
 	upgPlasmaBtn: function(){
-		let cost = {metals:20, rare:10}
+		let cost = {metals:20, rare:10};
 		let onClick = ()=>{
 			if ( upgPlasmaBtn.className == "tooltip button" && utils.canBuy(cost) ){
 				resources.subtract(cost);
@@ -349,16 +351,16 @@ let buttons = {
 				upgPlasmaBtn.setAttribute("class", "tooltip button disabled");
 			}
 			else if ( upgPlasmaBtn.className == "tooltip button" ){
-				messages.display([">> not enough resources"])
+				messages.display([">> not enough resources"]);
 			}
-		}
+		};
 		let upgPlasmaBtn = buttons.newButton("upgrade plasma weapon", "upgrade-plasma-button", cost, onClick);
 		const explorerViewRight = document.getElementById("explorer-view-right");
 		explorerViewRight.appendChild(upgPlasmaBtn);
 	},
 
 	upgSlowBomb: function(){
-		let cost = {metals:20, rare:10}
+		let cost = {metals:20, rare:10};
 		let onClick = ()=>{
 			if ( upgSlowBombBtn.className == "tooltip button" && utils.canBuy(cost) ){
 				resources.subtract(cost);
@@ -366,40 +368,40 @@ let buttons = {
 				upgSlowBombBtn.setAttribute("class", "tooltip button disabled");
 			}
 			else if ( upgSlowBombBtn.className == "tooltip button" ){
-				messages.display([">> not enough resources"])
+				messages.display([">> not enough resources"]);
 			}
-		}
+		};
 		let upgSlowBombBtn = buttons.newButton("upgrade slowdown", "upgrade-slowdown-button", cost, onClick);
 		const explorerViewRight = document.getElementById("explorer-view-right");
 		explorerViewRight.appendChild(upgSlowBombBtn);
 	},
 
 	upgShieldBtn: function(){
-		let cost = {metals:20, rare:10}
+		let cost = {metals:20, rare:10};
 		let onClick = ()=>{
 			if ( upgShieldBtn.className == "tooltip button" && utils.canBuy(cost) ){
 				resources.subtract(cost);
 				upgShieldBtn.setAttribute("class", "tooltip button disabled");
 				if ( explorer.maxShield == 0 ){
-					utils.cooldown(explorer.upgradeCooldowns["shieldI"], upgShieldBtn, "upgrade shield II", function(){
+					utils.cooldown(explorer.upgradeCooldowns.shieldI, upgShieldBtn, "upgrade shield II", function(){
 						explorer.maxShield += 5;
 					});					
 				}
 				else if ( explorer.maxShield == 5 ){
-					utils.cooldown(explorer.upgradeCooldowns["shieldII"], upgShieldBtn, "upgrade shield III", function(){
+					utils.cooldown(explorer.upgradeCooldowns.shieldII, upgShieldBtn, "upgrade shield III", function(){
 						explorer.maxShield += 5;
 					});						
 				}
 				else if ( explorer.maxShield == 10 ){
-					utils.cooldown(explorer.upgradeCooldowns["shieldIII"], upgShieldBtn, "upgrade shield III", function(){
+					utils.cooldown(explorer.upgradeCooldowns.shieldIII, upgShieldBtn, "upgrade shield III", function(){
 						explorer.maxShield += 5;
 					});						
 				}
 			}
 			else if ( upgShieldBtn.className == "tooltip button" ){
-				messages.display([">> not enough resources"])
+				messages.display([">> not enough resources"]);
 			}
-		}
+		};
 
 		let upgShieldBtn = buttons.newButton("upgrade shield", "upgrade-shield-button", cost, onClick);
 		const explorerViewRight = document.getElementById("explorer-view-right");
@@ -407,7 +409,7 @@ let buttons = {
 	},
 
 	upgAmphibious: function(){
-		let cost = {metals:20, rare:10}
+		let cost = {metals:20, rare:10};
 		let onClick = ()=>{
 			if ( upgAmphibiousBtn.className == "tooltip button" ){
 				if (  utils.canBuy(cost) ){
@@ -416,10 +418,10 @@ let buttons = {
 					explorer.amphibious = true;
 				}
 				else{
-					messages.display([">> not enough resources"])
+					messages.display([">> not enough resources"]);
 				}
 			}
-		}
+		};
 
 		let upgAmphibiousBtn = buttons.newButton("amphibious", "upgrade-amphibious-button", cost, onClick);
 		const explorerViewRight = document.getElementById("explorer-view-right");
@@ -427,7 +429,7 @@ let buttons = {
 	},
 
 	upgSatellite: function(){
-		let cost = {metals:20, rare:10}
+		let cost = {metals:20, rare:10};
 		let onClick = ()=>{
 			if ( upgSatelliteBtn.className == "tooltip button"){
 				if ( utils.canBuy(cost) ){
@@ -436,10 +438,10 @@ let buttons = {
 					map.revealMap();
 				}
 				else {
-					messages.display([">> not enough resources"])
+					messages.display([">> not enough resources"]);
 				}
 			}
-		}
+		};
 
 		let upgSatelliteBtn = buttons.newButton("satellite", "upgrade-satellite-button", cost, onClick);
 		const explorerViewRight = document.getElementById("explorer-view-right");
@@ -549,7 +551,7 @@ let buttons = {
 			utils.cooldown(5000, chargeShield, "charge shield", function(){
 				chargeShield.setAttribute("class", "button");
 			});
-		}
+		};
 		let chargeShield = buttons.newButton( "charge shield", "charge-shield", {}, onClickShield );
 
 
@@ -559,11 +561,11 @@ let buttons = {
 				utils.cooldown(2000, fireWeapon, "fire weapon", function(){
 					fireWeapon.setAttribute("class", "button");
 				});
-				event.animation(explorer.weaponIcon, fight.player.icon, explorer.weaponSpeed);
+				events.animation(explorer.weaponIcon, fight.player.icon, explorer.weaponSpeed);
 				setTimeout(fight.playerAttack.bind(fight), explorer.weaponSpeed*NUMBER_OF_CELLS, explorer.weapon);
 			}
 			
-		}
+		};
 		let fireWeapon = buttons.newButton("fire weapon", "fire-weapon", {}, onClickFire);
 
 		let onClickPlasma = ()=>{
@@ -572,11 +574,11 @@ let buttons = {
 				utils.cooldown(2000, plasmaWeapon, "plasma weapon", function(){
 					plasmaWeapon.setAttribute("class", "button");
 				});
-				event.animation(explorer.plasmaIcon, fight.player.icon, explorer.plasmaSpeed);
+				events.animation(explorer.plasmaIcon, fight.player.icon, explorer.plasmaSpeed);
 				setTimeout(fight.playerAttack.bind(fight), explorer.plasmaSpeed*NUMBER_OF_CELLS, explorer.plasma);
 
 			}			
-		}
+		};
 		let plasmaWeapon = buttons.newButton("plasma weapon", "plasma-weapon", {}, onClickPlasma);
 
 		let onClickSlowdown = ()=>{
@@ -585,14 +587,18 @@ let buttons = {
 				utils.cooldown(2000, slowdown, "slowdown", function(){
 					slowdown.setAttribute("class", "button");
 				});
-				event.animation(explorer.slowdownIcon, fight.player.icon, explorer.slowdownSpeed);
+				events.animation(explorer.slowdownIcon, fight.player.icon, explorer.slowdownSpeed);
 				setTimeout(fight.playerAttack.bind(fight), explorer.slowdownSpeed*NUMBER_OF_CELLS, explorer.slowdown);
 
 			}			
-		}
+		};
 		let slowdown = buttons.newButton("slowdown", "slowdown", {}, onClickSlowdown);	
 
 		let availableBattleButtons = [fireWeapon];
+
+		if ( explorer.maxShield ){
+			availableBattleButtons.push(chargeShield);
+		}
 
 		if ( explorer.plasma ){
 			availableBattleButtons.push(plasmaWeapon);
@@ -600,11 +606,9 @@ let buttons = {
 		if ( explorer.slowdown ){
 			availableBattleButtons.push(slowdown);
 		}
-		if ( explorer.maxShield ){
-			availableBattleButtons.push(chargeShield);
-		}
 
-		return availableBattleButtons
+
+		return availableBattleButtons;
 		
 	},
 
@@ -635,12 +639,12 @@ let buttons = {
 			let button = buttons.newButton(key+" ["+fight.enemy.loot[key]+"]", "loot-"+key, {}, onClick);
 			lootBtns.push(button);
 
-		};
+		}
 		return lootBtns;
 	},
 
 	addBase: function(type, includeController){
-		console.log(type, includeController)
+		console.log(type, includeController);
 		let baseMonitor = document.getElementById("base-monitor");
 
 		let newRow = document.createElement("div");
@@ -688,7 +692,7 @@ let buttons = {
 			subtract.textContent = "-";
 			subtract.addEventListener('click', ()=>{
 				if ( base.droids[type] ){
-					base.droids["idle"] +=1;
+					base.droids.idle +=1;
 					base.droids[type] -=1 ;
 					resourcePanel.updateViewBase("idle");
 					resourcePanel.updateViewBase(type);
@@ -700,8 +704,8 @@ let buttons = {
 			add.setAttribute("id", "base-view-"+type.replace(/ /g,'')+"-add");
 			add.textContent = "+";
 			add.addEventListener('click', ()=>{
-				if ( base.droids["idle"] ){
-					base.droids["idle"] -=1
+				if ( base.droids.idle ){
+					base.droids.idle -=1;
 					base.droids[type] +=1 ;	
 					resourcePanel.updateViewBase("idle");
 					resourcePanel.updateViewBase(type);		

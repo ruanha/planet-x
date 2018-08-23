@@ -43,7 +43,7 @@ let planet ={
 
 					let symbol = ( map.isVisible(x,y) )?  map.objectMap[y][x].symbol:String.fromCharCode(178);
 					symbol = ( map.isExplorer(x,y) )?  explorer.symbol:symbol;
-					rowHTML += symbol
+					rowHTML += symbol;
 				}
 				else {
 					rowHTML += "\u00A0";
@@ -56,4 +56,4 @@ let planet ={
 	rotate: function(dx){
 		this.display(dx);
 	}
-}
+};

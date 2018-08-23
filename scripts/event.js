@@ -1,15 +1,17 @@
+"use strict";
+
 const NUMBER_OF_CELLS = 6;
 
-let event = {
+let events = {
 	titleText:"",
 	message:"",
 	mineUnderAttack:false,
 
 	resource: function(tileIcon, x, y){
-		titleText = {M:"Metals", R:"Rare Metals", U:"Uran"};
-		message = "You have found a source of "+titleText[tileIcon]+". You can set up a mining operation here, by unloading droids."
-		event.titleText = "A Source off "+titleText[tileIcon]+"!";
-		event.message = message;
+		let titleText = {M:"Metals", R:"Rare Metals", U:"Uran"};
+		let message = "You have found a source of "+titleText[tileIcon]+". You can set up a mining operation here, by unloading droids.";
+		this.titleText = "A Source off "+titleText[tileIcon]+"!";
+		this.message = message;
 		game.pause();
 		
 		let onClick = ()=>{
@@ -20,7 +22,7 @@ let event = {
 				offBase[tileIcon].droids += 1;
 				explorer.updateView();
 			}			
-		}
+		};
 
 		let offloadDroids = buttons.newButton("unload droids", "unload-droids", {}, onClick);
 
@@ -57,7 +59,7 @@ let event = {
 		return bottomPanel;
 	},
 
-	displayFight: function(){
+	displayFight: function(topPanel){
 		let explorerHealthBar = document.createElement("div");
 		explorerHealthBar.setAttribute("id", "explorer-health-bar");
 		explorerHealthBar.textContent = "health   "+ explorer.health+"/"+explorer.maxHealth;
@@ -107,27 +109,36 @@ let event = {
 		return topPanel;	
 	},
 
-	display: function(buttons=[], closeDisabled=false, battle=false){
+	display: function(useButtons=[], closeDisabled=false, battle=false){
 		let wrapper = document.getElementById("wrapper");
 
-		topPanel = this.displayTopPanel();
-		midPanel = this.displayMidPanel();
-		bottomPanel = this.displayBottomPanel();
+		let topPanel = this.displayTopPanel();
+		let midPanel = this.displayMidPanel();
+		let bottomPanel = this.displayBottomPanel();
 
-		let closeBtn = this.closeBtn();
+		let eventPanel = this.displayEventText(events.titleText, this.message);
 
-		eventPanel = this.displayEventText(event.titleText, event.message);
+		let onClick = ()=>{
+			let closeBtn = document.getElementById("close-button");
+			
+			if ( closeBtn.className != "button disabled" ){
+				eventPanel.parentNode.removeChild(eventPanel);
+				game.resume();				
+			}
+		};
+
+		let closeBtn = buttons.newButton("close", "close-button", {}, onClick);
 
 		if ( battle ){
-			event.titleText = fight.enemy.titleText;
-			event.message = fight.enemy.messageText;
+			this.titleText = fight.enemy.titleText;
+			this.message = fight.enemy.messageText;
 			topPanel = this.displayFight(topPanel);
-			closeBtn.setAttribute("class", "button disabled")
+			closeBtn.setAttribute("class", "button disabled");
 		}
 
 
-		for ( i=0; i<buttons.length; i++){
-			midPanel.appendChild(buttons[i]);
+		for ( let i=0; i<useButtons.length; i++){
+			midPanel.appendChild(useButtons[i]);
 		}
 		bottomPanel.appendChild(closeBtn);
 
@@ -137,36 +148,25 @@ let event = {
 		wrapper.appendChild(eventPanel);
 	},
 
-	closeBtn: function(){
-		let onClick = ()=>{
-			let closeBtn = document.getElementById("close-button")
-			if ( closeBtn.className != "button disabled" ){
-				eventPanel.parentNode.removeChild(eventPanel);
-				game.resume();				
-			}
-		}
-		return buttons.newButton("close", "close-button", {}, onClick);
-	},
-
 	animation: function(icon, shooter, speed){
-		console.log(speed)
-		cellIndex = ( shooter == "@explorer" )? 0:NUMBER_OF_CELLS-1 ;
+		console.log(speed);
+		let cellIndex = ( shooter == "@explorer" )? 0:NUMBER_OF_CELLS-1 ;
 
 		function recursive(icon, shooter, cellIndex, speed){
-			console.log(speed)
+			console.log(speed);
 			if ( shooter == "@explorer" ){
 				// end recursive condition for @explorer
 				if ( cellIndex == NUMBER_OF_CELLS ){
 					//end animation, assert damage, dead?
-					event.clearCell(cellIndex-1, icon);
+					events.clearCell(cellIndex-1, icon);
 					return true;
 				}
 				else {
 					if ( cellIndex > 0 ){
-						event.clearCell(cellIndex-1, icon);
+						events.clearCell(cellIndex-1, icon);
 					}
 
-					let cell = document.getElementById("cell-"+cellIndex)
+					let cell = document.getElementById("cell-"+cellIndex);
 					cell.textContent = icon;
 					setTimeout( recursive, speed, icon, shooter, cellIndex+1, speed  );
 				}
@@ -176,14 +176,14 @@ let event = {
 				// end recursive condition for @enemy
 				if ( cellIndex == 0){
 					//end animation, assert damage, dead?
-					event.clearCell(cellIndex+1, icon);
+					events.clearCell(cellIndex+1, icon);
 					return true;
 				}
 				else{
 					if ( cellIndex < NUMBER_OF_CELLS-1 ){
-						event.clearCell(cellIndex+1, icon);
+						events.clearCell(cellIndex+1, icon);
 					}
-					let cell = document.getElementById("cell-"+cellIndex)
+					let cell = document.getElementById("cell-"+cellIndex);
 					cell.textContent = icon;
 					setTimeout( recursive, speed, icon, shooter, cellIndex, speed  );					
 				}
@@ -195,7 +195,7 @@ let event = {
 
 	clearCell: function(cellIndex, icon){
 		let cell = document.getElementById( "cell-"+cellIndex );
-		content = cell.textContent;
+		let content = cell.textContent;
 		cell.textContent = ( content == icon )? "":content;
 	},
 
@@ -205,25 +205,25 @@ let event = {
 	},
 
 	mineAttack: function(){
-		AI.delayMessage([">>Aliens are attacking our mine operation!"]);
+		messages.display([">>Aliens are attacking our mine operation!"]);
 		let baseObj = offBase.getActiveBase();
 		baseObj.underAttack = true;
 		baseObj.underAttackTimer = setTimeout( function(){
-			AI.delayMessage(["Mine lost..."]);
+			messages.display(["Mine lost..."]);
 			baseObj.underAttack = false;
 			baseObj.droids = 0;
 			offBase.removeBase(baseObj);
-		},  30000)
+		},  30000);
 	},
 
 	baseAttack: function(){
-		AI.delayMessage([">>Base is under attack!"]);
+		messages.display([">>Base is under attack!"]);
 		base.underAttack = true;
 		if ( explorer.pos.x == base.pos.x && explorer.pos.y == base.pos.y ){
 			fight.manager("baseAttackBeast");
 		}
 		base.underAttackTimer = setTimeout( function(){
 			fight.enemy.victorious();
-		},  30000)
+		},  30000);
 	},
 };
