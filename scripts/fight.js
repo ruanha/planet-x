@@ -25,6 +25,8 @@ let fight = {
 
 	manager: function(typeOfEnemy){
 		this.enemy = enemies[typeOfEnemy]();
+		event.titleText=this.enemy.titleText;
+		event.message=this.enemy.messageText;
 		this.initPlayer();
 
 		game.pause();
