@@ -88,37 +88,34 @@ let explorer = {
 
 	upgrade: function(){
 		switch (explorer.techLevel){
+
 			case 0:
 			buttons.upgBatteryBtn();
 			buttons.upgShieldBtn();
 			break;
+
 			case 1:
 			messages.display([">> retrieved lost tech", ">> can now upgrade explorer"]);
 			buttons.upgPlasmaBtn();
-      break;
+      		break;
 			
 			case 2:
 			messages.display([">> retrieved lost tech", ">> can now upgrade explorer"]);
-			let upgShieldBtn = document.getElementById("upgrade-shield-button");
-			upgShieldBtn.setAttribute("class", "tooltip button");
-			let upgBatteryBtn = document.getElementById("upgrade-battery-button");
-			upgBatteryBtn.setAttribute("class", "tooltip button");
+			let upgShieldBtn = document.getElementById("upgrade-shield-button").setAttribute("class", "tooltip button");
+			let upgBatteryBtn = document.getElementById("upgrade-battery-button").setAttribute("class", "tooltip button");
 			break;
 
 			case 3:
 			messages.display([">> retrieved lost tech", ">> can now upgrade explorer"]);
-			let upgShieldBtn = document.getElementById("upgrade-shield-button");
-			upgShieldBtn.setAttribute("class", "tooltip button");
-			let upgBatteryBtn = document.getElementById("upgrade-battery-button");
-			upgBatteryBtn.setAttribute("class", "tooltip button");
+			document.getElementById("upgrade-shield-button").setAttribute("class", "tooltip button");
+			document.getElementById("upgrade-battery-button").setAttribute("class", "tooltip button");
 			buttons.upgAmphibious();
 			break;
 
 			case 4:
 			//Amphibous, ultimate battery
 			messages.display([">> retrieved lost tech", ">> can now upgrade explorer"]);
-			let upgBatteryBtn = document.getElementById("upgrade-battery-button");
-			upgBatteryBtn.setAttribute("class", "tooltip button");
+			document.getElementById("upgrade-battery-button").setAttribute("class", "tooltip button");
 			buttons.upgSlowBomb();
 			break;
 

@@ -594,12 +594,14 @@ let buttons = {
 		};
 		let slowdown = buttons.newButton("slowdown", "slowdown", {}, onClickSlowdown);	
 
-		let availableBattleButtons = [fireWeapon];
+		let availableBattleButtons = [];
 
 		if ( explorer.maxShield ){
 			availableBattleButtons.push(chargeShield);
 		}
-
+		if ( fireWeapon ){
+			availableBattleButtons.push(fireWeapon);
+		}
 		if ( explorer.plasma ){
 			availableBattleButtons.push(plasmaWeapon);
 		}
@@ -693,7 +695,7 @@ let buttons = {
 			subtract.addEventListener('click', ()=>{
 				if ( base.droids[type] ){
 					base.droids.idle +=1;
-					base.droids[type] -=1 ;
+					base.droids[type] -=1;
 					resourcePanel.updateViewBase("idle");
 					resourcePanel.updateViewBase(type);
 				}
@@ -718,4 +720,4 @@ let buttons = {
 			baseViewRight.appendChild(newerRow);
 		}
 	},
-}
+};
