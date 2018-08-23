@@ -82,19 +82,20 @@ let explorer = {
 
 	upgrade: function(){
 		switch (explorer.techLevel){
-			case 1:
-			messages.display([">> retrieved lost tech", ">> can now upgrade explorer"]);
+			case 0:
 			buttons.upgBatteryBtn();
 			buttons.upgShieldBtn();
 			break;
-
+			case 1:
+			messages.display([">> retrieved lost tech", ">> can now upgrade explorer"]);
+			break;
+			buttons.upgPlasmaBtn();
 			case 2:
 			messages.display([">> retrieved lost tech", ">> can now upgrade explorer"]);
 			upgShieldBtn = document.getElementById("upgrade-shield-button");
 			upgShieldBtn.setAttribute("class", "tooltip button");
 			upgBatteryBtn = document.getElementById("upgrade-battery-button");
 			upgBatteryBtn.setAttribute("class", "tooltip button");
-			buttons.upgPlasmaBtn();
 			break;
 
 			case 3:
@@ -120,7 +121,7 @@ let explorer = {
 			buttons.upgSatellite();
 			break;
 		}
-		explorer.updateMonitor();
+		//explorer.updateMonitor();
 	},
 
 	charge: function(){
@@ -273,7 +274,7 @@ let explorer = {
 	makeMove: function(newPos){
 		map.setExplorer(explorer.pos.x, explorer.pos.y, false);
     	explorer.currentMove += 1;
-    	explorer.onBoard.energy -= 1;
+    	explorer.onBoard.energy -= 0.5;
     	Object.assign(explorer.pos, newPos);
     	explorer.setDistance();
     	map.reveal(explorer.pos.x, explorer.pos.y, "@");
