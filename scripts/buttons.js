@@ -126,7 +126,6 @@ let buttons = {
 					buttons.slideMenu.controlRoom()
 				})				
 			}
-			landBtn.setAttribute("class", "button disabled")
 		}
 
 		let landBtn = this.newButton("land ship!", "landBtn", {}, onClick);

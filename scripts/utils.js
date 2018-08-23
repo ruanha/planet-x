@@ -22,8 +22,8 @@ let utils = {
 			button.style.backgroundImage = linearGradient
 			button.style.opacity = "0.5"
 			setTimeout(function() {
-				return recursive(time-1000, fullTime, button, btnText, callback);
-			}, 1000);
+				return recursive(time-10, fullTime, button, btnText, callback);
+			}, 10);
 		}
 		recursive(time, fullTime, button, btnText, callback);
 	},
