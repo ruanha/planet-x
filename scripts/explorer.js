@@ -261,8 +261,6 @@ let explorer = {
 		    }
 		    else if ( tile.symbol == '*' ){
 		    	if ( explorer.amphibious ){
-			    	explorer.currentMove += 1;
-			    	explorer.onBoard.energy -= 1;
 			    	explorer.makeMove(newPos);
 		    	}
 		    	else {
