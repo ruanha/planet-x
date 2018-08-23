@@ -96,7 +96,6 @@ let views={
 
 		view.appendChild(explorerView);
 		buttons.explorer();
-		explorer.init();
 
 		// PLANET VIEW
 		let planetView = document.createElement("div");

@@ -281,12 +281,8 @@ let buttons = {
 						explorer.initPanel();
 						explorer.updateMonitor();
 						buttons.deployBtn();
-					})
-
-					if ( !document.getElementById("planetMenu") ){
 						buttons.slideMenu.planet();
-					}
-
+					})
 				}
 				else{
 					messages.display([">> not enough resources"]);

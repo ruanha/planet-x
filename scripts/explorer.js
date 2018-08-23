@@ -29,29 +29,8 @@ let explorer = {
 	upgradeCooldowns:{ batteryI:5000, batteryII:10000, batteryIII:20000, batteryIV:50000,
 	 shieldI:5000, shieldII:10000, shieldIII:20000 },
 
-	init: function(){
-		/*
-		const explorerView = document.getElementById("explorerView");
-		const explorerPanel = document.createElement("div");
-		explorerPanel.setAttribute("id", "explorer-panel");
-		explorerView.appendChild(explorerPanel);
-		*/
-	},
 
 	initPanel: function(){
-		/*
-		const explorerPanel = document.getElementById("explorer-panel");
-		const explorerMonitor = document.createElement("div");
-
-		explorerMonitor.setAttribute("id", "explorer-monitor");
-		explorerMonitor.setAttribute("data-legend", "explorer");
-
-		const explorerMonitorTable = document.createElement("table");
-		explorerMonitorTable.setAttribute("id", "explorer-monitor-table");
-
-		explorerMonitor.appendChild(explorerMonitorTable);
-		explorerPanel.appendChild(explorerMonitor);*/
-
 		const explorerViewLeft = document.getElementById("explorer-view-left")
 		const explorerMonitorTable = document.createElement("table");
 		explorerMonitorTable.setAttribute("id", "explorer-monitor-table");
@@ -314,8 +293,9 @@ let explorer = {
 		let deployBtn = document.getElementById("deploy-button");
 		deployBtn.parentNode.removeChild(deployBtn);
 		document.getElementById("explorer-button").setAttribute("class", "tooltip button");
-		document.getElementById("explorer-monitor").parentNode.removeChild(document.getElementById("explorer-monitor"));
+		document.getElementById("explorer-monitor-table").parentNode.removeChild(document.getElementById("explorer-monitor-table"));
 		document.getElementById("explorerMenu").click();
+		document.getElementById("planetMenu").parentNode.removeChild(document.getElementById("planetMenu"));
 	},
 
 	updateView: function(){
