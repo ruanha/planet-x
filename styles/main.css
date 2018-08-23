@@ -1,15 +1,24 @@
 body {
-  font-family: "Times New Roman", Times, serif;
-  font-size: 16px;
-  font-weight: normal;
-  line-height: normal;
-  letter-spacing: normal;
+	font-family: "Times New Roman", Times, serif;
+	font-size: 16px;
+	font-weight: normal;
+	line-height: normal;
+	letter-spacing: normal;
 }
 
 h1 {
-  font-family: "Times New Roman", Times, serif;
-  font-size: 20px;
-  font-weight: normal;
+	font-family: "Times New Roman", Times, serif;
+	font-size: 20px;
+	font-weight: normal;
+}
+
+/* PREVENT USER MARKING TEXT -looks ugly*/
+::selection {
+	background-color: transparent;
+}
+
+::-moz-selection {
+	background-color: transparent;
 }
 
 /* VIEWS */

@@ -2,6 +2,33 @@
 
 let utils = {
 	cooldown:function(time, button, btnText, callback){
+		const fullTime = time;
+
+		function recursive(time, fullTime, button, btnText, callback){
+			if (time <= 0) {
+				button.textContent = btnText;
+				let percentage = 0;
+				let linearGradient = "linear-gradient(to right, gray, gray "+ percentage+
+				"%, transparent "+ percentage+"%)";
+				button.style.backgroundImage = linearGradient
+				callback();
+				return time;
+			}
+			//button.textContent = time/1000;
+
+			let percentage = (time/fullTime)*100
+			let linearGradient = "linear-gradient(to right, rgba(0, 0, 0, 0.35) "+ percentage+
+				"%, rgba(0, 0, 0, 0) "+ percentage+"%)";
+			button.style.backgroundImage = linearGradient
+			button.style.opacity = "0.5"
+			setTimeout(function() {
+				return recursive(time-1000, fullTime, button, btnText, callback);
+			}, 1000);
+		}
+		recursive(time, fullTime, button, btnText, callback);
+	},
+
+	cooldownOld:function(time, button, btnText, callback){
 		if (time <= 0) {
 			button.textContent = btnText;
 			callback();
