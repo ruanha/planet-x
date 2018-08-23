@@ -32,9 +32,14 @@ let game = {
 }
 
 if ( game.development ){
-	console.log("development...")
-	buttons.cooldowns = {restartReactor:0, activateExtractor:0, extract:0, reactor:0, droid:0, landBtn:0, explorer:0},
-	messages.delay = [0, 0, 0];
+	if (confirm("use dev mode?")){
+		console.log("development...")
+		buttons.cooldowns = {restartReactor:0, activateExtractor:0, extract:0, reactor:0, droid:0, landBtn:0, explorer:0},
+		messages.delay = [0, 0, 0];
+	}
+	else{
+		game.development = false;
+	}
 }
 
 game.init();
