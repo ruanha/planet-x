@@ -89,6 +89,10 @@ h1 {
 	float:right;
 }
 
+.slider{
+	font-size: 18px;
+}
+
 .slider:hover{
 	cursor:pointer;
 }
@@ -131,7 +135,7 @@ h1 {
 	height:15px;
 }
 
-/* PANELS */
+/* RESOURCE AND BASE SIDE PANEL */
 
 #resourcePanel{
 	position: absolute;
@@ -142,11 +146,17 @@ h1 {
 	height:570px;
 }
 
-/* MESSAGGES */
-#messages{
-	z-index:3;
-	width:auto;
-	height:auto;
+#resource-monitor, #base-monitor {
+	position: relative;
+	float: left;
+	margin-top:15px;
+	border: 1px solid black;
+	cursor: default;
+	width: 200px;*/
+}
+
+.monitor-header{
+ 	font-weight: bold;
 }
 
 /* ALL BOXES USING DATA-LEGEND TO SET TITLE */
@@ -159,18 +169,11 @@ div#explorer-monitor:before, div#planet-monitor:before, div#planet-monitor-explo
 	top: -13px;
 }
 
-/* RESOURCE AND BASE MONITORS */
-#resource-monitor, #base-monitor {
-	float: left;
-	margin-top:15px;
-	border: 1px solid black;
-	cursor: default;
-	padding: 5px 10px;
-	width: 200px;
-}
-
-.monitor-header{
- 	font-weight: bold;
+/* MESSAGGES */
+#messages{
+	z-index:3;
+	width:auto;
+	height:auto;
 }
 
 /* TOOLTIP */

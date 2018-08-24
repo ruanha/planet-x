@@ -64,7 +64,6 @@ let views={
 		let controlRoomView = document.createElement("div");
 		controlRoomView.setAttribute("class", "views");
 		controlRoomView.setAttribute("id", "controlRoomView");
-		controlRoomView.textContent = "Actions:";
 		view.appendChild(controlRoomView);
 
 		// BASE VIEW

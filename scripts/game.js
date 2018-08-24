@@ -17,7 +17,7 @@ let game = {
 
 	init: function(){
 		views.init(); //set initial divs
-		messages.display([">> Starship has entered orbit", ">> Get ready..."], buttons.landBtn.bind(buttons));
+		messages.display([">> starship has entered orbit", ">> get ready..."], buttons.landBtn.bind(buttons));
 	},
 
 	loop: function(){
@@ -66,7 +66,7 @@ if ( game.development ){
 				explorer.weapon = 10;
 				document.getElementById("deploy-button").click();
 			}, 100);
-		}, 100);
+		}, 200);
 	}, 500);
 }
 

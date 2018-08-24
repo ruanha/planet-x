@@ -35,6 +35,7 @@ let resourcePanel = {
 		let baseMonitor = document.getElementById("base-monitor");
 
 		let newRow = document.createElement("div");
+		newRow.setAttribute("class", "row")
 		let baseThing = document.createElement("div");
 
 		baseThing.textContent = type;

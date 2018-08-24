@@ -123,10 +123,14 @@ let buttons = {
 			if ( landBtn.className !=  "button disabled"){
 				landBtn.setAttribute("class", "button disabled");
 				utils.cooldown(buttons.cooldowns.landBtn, landBtn, landBtn.textContent, function(){
+					const callback = ()=>{
+						buttons.restartReactor();
+						game.on = true;
+						buttons.slideMenu.controlRoom();
+					}
 					landBtn.parentNode.removeChild(landBtn);
-					buttons.restartReactor();
-					game.on = true;
-					buttons.slideMenu.controlRoom();
+
+					messages.display([">> landed on planet, base established"], callback);
 				});			
 			}
 		};
