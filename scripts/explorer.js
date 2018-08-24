@@ -290,11 +290,12 @@ let explorer = {
 	},
 
 	dead: function(message){
-		alert("Explorer lost!");
 		messages.display([message]);
+		map.setExplorer(explorer.pos.x, explorer.pos.y, false);
 		Object.assign(explorer.pos, base.pos);
 		explorer.onBoard.energy = 0;
 		explorer.onBoard.droids = 0;
+		explorer.health = explorer.maxHealth;
 		explorer.updateView();
 		explorer.deployed = false;
 		let deployBtn = document.getElementById("deploy-button");
